@@ -4,8 +4,15 @@ from django_extensions.db.models import TimeStampedModel, TitleDescriptionModel
 from django.db.models import QuerySet
 
 
+class ResourceType(TitleDescriptionModel, TimeStampedModel):
+    type_name = models.TextField()
+
+
 class Resource(TitleDescriptionModel, TimeStampedModel):
-    ...
+    name = models.TextField()
+    resource_type = models.ForeignKey(
+        ResourceType, models.SET_NULL, related_name="resources", null=True, blank=True
+    )
 
 
 class Todo(TimeStampedModel, TitleDescriptionModel):
