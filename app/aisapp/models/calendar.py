@@ -1,14 +1,8 @@
 from django.db import models
 from django_extensions.db.models import TimeStampedModel, TitleDescriptionModel
+from rest_framework.serializers import ModelSerializer
 from aisapp.models.todo import Aspect
 import calendar
-
-
-class DayPreset(TimeStampedModel):
-    total_time_budget = models.DurationField()
-    day_of_week = models.PositiveSmallIntegerField(
-        choices=list(zip(range(7), calendar.day_name))
-    )
 
 
 class TimeUnit(TimeStampedModel, TitleDescriptionModel):
@@ -17,6 +11,13 @@ class TimeUnit(TimeStampedModel, TitleDescriptionModel):
 
     class Meta:
         abstract = True
+
+
+class DayPreset(TimeStampedModel):
+    total_time_budget = models.DurationField()
+    day_of_week = models.PositiveSmallIntegerField(
+        choices=list(zip(range(7), calendar.day_name))
+    )
 
 
 class CalendarMonth(TimeUnit):
@@ -36,14 +37,11 @@ class CalendarMonth(TimeUnit):
             day_date = self.date.replace(day=day)
             try:
                 day_preset = DayPreset.objects.get(day_of_week=day_date.weekday())
+                CalendarDay.objects.get_or_create(
+                    date=day_date, calendar_month=self, day_preset=day_preset
+                )
             except DayPreset.DoesNotExist:
-                day_preset = None
-
-            CalendarDay.objects.get_or_create(
-                date=day_date,
-                calendar_month=self,
-                defaults={"day_preset": day_preset},
-            )
+                print(f"DayPreset does not exist for day {day_date.weekday()}")
 
 
 class CalendarDay(TimeUnit):
@@ -55,7 +53,7 @@ class CalendarDay(TimeUnit):
         related_name="calendar_days",
     )
     day_preset = models.ForeignKey(
-        to=DayPreset, on_delete=models.SET_NULL, null=True, related_name="calendar_days"
+        to=DayPreset, on_delete=models.DO_NOTHING, related_name="calendar_days"
     )
 
     @property
@@ -63,13 +61,37 @@ class CalendarDay(TimeUnit):
         return self.date.weekday()
 
     def save(self, **kwargs):
-        if not self.total_time_budget and self.day_preset:
+        if not self.total_time_budget:
             self.total_time_budget = self.day_preset.total_time_budget
         return super().save(**kwargs)
 
 
-class RatioPresets(TimeStampedModel):
+class RatioPreset(TimeStampedModel):
     aspect = models.ForeignKey(
         Aspect, on_delete=models.CASCADE, related_name="ratio_preset"
     )
     preferred_time_spent = models.DurationField()
+
+
+class RatioPresetSerializer(ModelSerializer):
+    class Meta:
+        model = RatioPreset
+        fields = ["aspect", "preferred_time_spent"]
+
+
+class DayPresetSerializer(ModelSerializer):
+    class Meta:
+        model = DayPreset
+        fields = ["total_time_budget", "day_of_week"]
+
+
+class CalendarDaySerializer(ModelSerializer):
+    class Meta:
+        model = CalendarDay
+        fields = ["date", "calendar_month"]
+
+
+class CalendarMonthSerializer(ModelSerializer):
+    class Meta:
+        model = CalendarMonth
+        fields = ["date"]
