@@ -73,25 +73,28 @@ class RatioPreset(TimeStampedModel):
     preferred_time_spent = models.DurationField()
 
 
+__default_fields = ["created", "modified", "title", "description"]
+
+
 class RatioPresetSerializer(ModelSerializer):
     class Meta:
         model = RatioPreset
-        fields = ["aspect", "preferred_time_spent"]
+        fields = __default_fields + ["aspect", "preferred_time_spent"]
 
 
 class DayPresetSerializer(ModelSerializer):
     class Meta:
         model = DayPreset
-        fields = ["total_time_budget", "day_of_week"]
+        fields = ["created", "modified", "total_time_budget", "day_of_week"]
 
 
 class CalendarDaySerializer(ModelSerializer):
     class Meta:
         model = CalendarDay
-        fields = ["date", "calendar_month"]
+        fields = __default_fields + ["date", "calendar_month"]
 
 
 class CalendarMonthSerializer(ModelSerializer):
     class Meta:
         model = CalendarMonth
-        fields = ["date"]
+        fields = __default_fields + ["date"]
