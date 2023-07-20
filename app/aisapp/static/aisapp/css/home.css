@@ -1,0 +1,52 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url("blue-1634110_1920.png");
+    background-size: cover;
+    color: #ffffff;
+    line-height: 2;
+    margin: 0;
+    padding: 0;
+}
+
+header button {
+    background-color: rgba(69, 178, 233, 0.8);
+    color: white;
+    border: none;
+    border-radius: 10%;
+    margin: 0.2vw 0;
+    padding: 0.8vw;
+}
+
+
+header button:hover {
+    transform: scale(1.02);
+
+}
+
+
+header {
+    color: #ffffff;
+    text-align: center;
+    padding: 30px 0;
+}
+
+
+header h1 {
+    margin: 0;
+    font-size: 2.8em;
+}
+
+
+footer {
+    background: rgba(46, 61, 80, 0.4);
+    color: #ffffff;
+    text-align: center;
+    padding: 30px 0;
+    width: 100%;
+    bottom: 0;
+}
+
+#slogan {
+    font-size: medium;
+    color: rgb(147, 191, 253);
+}
