@@ -1,0 +1,35 @@
+.card {
+    display: flex;
+    background: rgba(46, 61, 80, 0.7);
+    margin: 30px auto;
+    padding: 25px;
+    max-width: 800px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.text-content {
+    flex: 1;
+    padding-left: 3vw;
+    padding-right: 3vw;
+}
+
+.card-title {
+    margin-top: 0;
+    color: #b8dae3;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.card img {
+    display: block;
+    filter: brightness(0) saturate(100%) invert(80%) sepia(14%) saturate(6213%) hue-rotate(349deg) brightness(90%) contrast(88%);
+    margin-left: auto;
+    margin-right: auto;
+    width: 4vw;
+}
+
+.reverse {
+    flex-direction: row-reverse;
+}
