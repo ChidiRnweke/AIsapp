@@ -12,7 +12,7 @@ class AppCard extends HTMLElement {
     render(reversed) {
         this.shadowRoot.innerHTML = `
         <style>
-            @import url('static/aisapp/pages/home/AppCard.css');
+            @import url('static/aisapp/AppCard.css');
         </style>
 
             <article class="card ${reversed ? 'reverse' : ''}">

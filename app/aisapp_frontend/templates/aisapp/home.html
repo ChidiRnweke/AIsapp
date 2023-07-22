@@ -6,37 +6,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Aisapp</title>
-    <link rel="stylesheet" href="{% static 'aisapp/pages/home/home.css' %}">
-    <script src="{% static 'aisapp/pages/home/AppCard.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'aisapp/common.css' %}">
+    <script src="{% static 'aisapp/AppCard.js' %}"></script>
+    <script src="{% static 'aisapp/LoginForm.js' %}"></script>
+    <script src="{% static 'aisapp/main.js' %}"></script>
+
 
 </head>
 
-<body>
+<template id="home">
     <header>
         <h1> AIsapp<br>
             Another scheduling and agenda app
         </h1>
-        <p id="slogan">Harnessing AI to prioritize life's essentials and revisit what's been left behind. <br>
+        <p>Harnessing AI to prioritize life's essentials and revisit what's been left behind. <br>
             Find time for what you really love.</p>
         <button>Login here</button>
     </header>
-    <main>
+    <main id="main-home">
 
-        <app-card img-src="{% static 'aisapp/pages/home/icons/idea.svg'%}" img-alt="A description of the image">
+        <app-card img-src="{% static 'aisapp/icons/idea.svg'%}" img-alt="A description of the image">
             <span slot="title">AI-Powered Scheduling</span>
             <span slot="text">Aisapp efficiently organizes your tasks based on your priorities
                 and available time. </span>
         </app-card>
 
-        <app-card img-src="{% static 'aisapp/pages/home/icons/note.svg'%}" img-alt="A description of the image"
-            reversed>
+        <app-card img-src="{% static 'aisapp/icons/note.svg'%}" img-alt="A description of the image" reversed>
             <span slot="title">Smart Reminders</span>
             <span slot="text">Never forget an important task again. Aisapp's reminders are
                 triggered
                 at the optimal time to encourage task completion. These reminders are tailored to your schedule,
                 ensuring you always have time to finish what you started.</span>
         </app-card>
-        <app-card img-src="{% static 'aisapp/pages/home/icons/progress.svg'%}" img-alt="A description of the image">
+        <app-card img-src="{% static 'aisapp/icons/progress.svg'%}" img-alt="A description of the image">
             <span slot="title">Progress Tracking</span>
             <span slot="text">Stay informed about your productivity. Aisapp's progress
                 tracking
@@ -44,13 +46,12 @@
                 be
                 more efficient.</span>
         </app-card>
-        <app-card img-src="{% static 'aisapp/pages/home/icons/chart.svg'%}" img-alt="A description of the image"
-            reversed>
+        <app-card img-src="{% static 'aisapp/icons/chart.svg'%}" img-alt="A description of the image" reversed>
             <span slot="title">Analytics</span>
             <span slot="text">Understand your peak productivity times, identify bottlenecks in your schedule, and use
                 this data to shape a more efficient routine.</span>
         </app-card>
-        <app-card img-src="{% static 'aisapp/pages/home/icons/calendar.svg'%}" img-alt="A description of the image">
+        <app-card img-src="{% static 'aisapp/icons/calendar.svg'%}" img-alt="A description of the image">
             <span slot="title">Google Calendar Integration</span>
             <span slot="text">Manage all your schedules in one place. Aisapp
                 seamlessly
@@ -58,8 +59,30 @@
                 roof.
                 Streamline your time management with Aisapp.</span>
         </app-card>
-
     </main>
+</template>
+
+
+<template id="404">
+    <header>
+        <h1>404 Not Found</h1>
+        <p>Seems like the page you are looking for is missing.</p>
+        <button id="back-home">Go back home</button>
+    </header>
+</template>
+
+<template id="login">
+    <header>
+        <h1>Create your account</h1>
+        <p>Start your journey here.</p>
+    </header>
+    <login-form></login-form>
+</template>
+
+
+<body>
+    <div id="main-content">
+    </div>
     <footer>
         <p>&copy; 2023 Aisapp. All rights reserved.</p>
     </footer>
