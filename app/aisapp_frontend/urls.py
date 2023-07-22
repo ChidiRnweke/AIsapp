@@ -1,6 +1,8 @@
-from django.urls import path
+from django.urls import re_path
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="aisapp/home.html"), name="home")
+    re_path(
+        r"^.*$", TemplateView.as_view(template_name="aisapp/home.html"), name="home"
+    )
 ]
