@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Aisapp</title>
-    <link rel="stylesheet" href="{% static 'aisapp/css/home.css' %}">
-    <script src="{% static 'aisapp/js/webcomponents/AppCard.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'aisapp/pages/home/home.css' %}">
+    <script src="{% static 'aisapp/pages/home/AppCard.js' %}"></script>
 
 </head>
 
@@ -22,20 +22,21 @@
     </header>
     <main>
 
-        <app-card img-src="{% static 'aisapp/images/icons/idea.svg'%}" img-alt="A description of the image">
+        <app-card img-src="{% static 'aisapp/pages/home/icons/idea.svg'%}" img-alt="A description of the image">
             <span slot="title">AI-Powered Scheduling</span>
             <span slot="text">Aisapp efficiently organizes your tasks based on your priorities
                 and available time. </span>
         </app-card>
 
-        <app-card img-src="{% static 'aisapp/images/icons/note.svg'%}" img-alt="A description of the image" reversed>
+        <app-card img-src="{% static 'aisapp/pages/home/icons/note.svg'%}" img-alt="A description of the image"
+            reversed>
             <span slot="title">Smart Reminders</span>
             <span slot="text">Never forget an important task again. Aisapp's reminders are
                 triggered
                 at the optimal time to encourage task completion. These reminders are tailored to your schedule,
                 ensuring you always have time to finish what you started.</span>
         </app-card>
-        <app-card img-src="{% static 'aisapp/images/icons/progress.svg'%}" img-alt="A description of the image">
+        <app-card img-src="{% static 'aisapp/pages/home/icons/progress.svg'%}" img-alt="A description of the image">
             <span slot="title">Progress Tracking</span>
             <span slot="text">Stay informed about your productivity. Aisapp's progress
                 tracking
@@ -43,12 +44,13 @@
                 be
                 more efficient.</span>
         </app-card>
-        <app-card img-src="{% static 'aisapp/images/icons/chart.svg'%}" img-alt="A description of the image" reversed>
+        <app-card img-src="{% static 'aisapp/pages/home/icons/chart.svg'%}" img-alt="A description of the image"
+            reversed>
             <span slot="title">Analytics</span>
             <span slot="text">Understand your peak productivity times, identify bottlenecks in your schedule, and use
                 this data to shape a more efficient routine.</span>
         </app-card>
-        <app-card img-src="{% static 'aisapp/images/icons/calendar.svg'%}" img-alt="A description of the image">
+        <app-card img-src="{% static 'aisapp/pages/home/icons/calendar.svg'%}" img-alt="A description of the image">
             <span slot="title">Google Calendar Integration</span>
             <span slot="text">Manage all your schedules in one place. Aisapp
                 seamlessly
