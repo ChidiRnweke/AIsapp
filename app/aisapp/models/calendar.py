@@ -1,11 +1,15 @@
-from django.db import models
-from django_extensions.db.models import TimeStampedModel, TitleDescriptionModel
-from rest_framework.serializers import ModelSerializer
-from aisapp.models.todo import Aspect
 import calendar
+from django.contrib.auth.models import User
+from django.db import models
+
+from django_extensions.db.models import TimeStampedModel
 
 
-class TimeUnit(TimeStampedModel, TitleDescriptionModel):
+class TimeUnit(TimeStampedModel):
+    """
+    Abstract model representing a generic time unit with a budget and spent duration.
+    """
+
     total_time_budget = models.DurationField()
     total_time_spent = models.DurationField()
 
@@ -14,14 +18,23 @@ class TimeUnit(TimeStampedModel, TitleDescriptionModel):
 
 
 class DayPreset(TimeStampedModel):
+    """
+    Model representing a preset for a user's typical day with a total time budget.
+    """
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     total_time_budget = models.DurationField()
     day_of_week = models.PositiveSmallIntegerField(
         choices=list(zip(range(7), calendar.day_name))
     )
 
 
-class CalendarMonth(TimeUnit):
-    date = models.DateField()
+class SharedCalendarMonth(models.Model):
+    """
+    Model representing a shared calendar month across users.
+    """
+
+    date = models.DateField(unique=True)
 
     @property
     def year(self):
@@ -31,70 +44,70 @@ class CalendarMonth(TimeUnit):
     def month_name(self):
         return calendar.month_name[self.date.month]
 
-    def save(self, **kwargs):
-        super().save(**kwargs)
-        for day in range(1, calendar.monthrange(self.year, self.date.month)[1] + 1):
-            day_date = self.date.replace(day=day)
-            try:
-                day_preset = DayPreset.objects.get(day_of_week=day_date.weekday())
-                CalendarDay.objects.get_or_create(
-                    date=day_date, calendar_month=self, day_preset=day_preset
-                )
-            except DayPreset.DoesNotExist:
-                print(f"DayPreset does not exist for day {day_date.weekday()}")
+    def __str__(self):
+        return self.date.strftime("%B %Y")
 
 
-class CalendarDay(TimeUnit):
-    date = models.DateField()
-    calendar_month = models.ForeignKey(
-        to=CalendarMonth,
-        on_delete=models.SET_NULL,
-        null=True,
+class UserCalendarMonth(models.Model):
+    """
+    Model representing a user-specific calendar month.
+    """
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    month = models.ForeignKey(SharedCalendarMonth, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (
+            "user",
+            "month",
+        )
+
+    def __str__(self):
+        return f"{self.user.username} - {self.month}"
+
+
+class SharedCalendarDay(models.Model):
+    """
+    Model representing a shared calendar day across users.
+    """
+
+    date = models.DateField(unique=True)
+
+    def __str__(self):
+        return self.date.strftime("%Y-%m-%d")
+
+
+class UserCalendarDay(TimeUnit):
+    """
+    Model representing a user-specific calendar day with time unit details and day preset.
+    """
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    day_calendar = models.ForeignKey(SharedCalendarDay, on_delete=models.CASCADE)
+    day_of_week = models.PositiveSmallIntegerField(editable=False)
+    day_preset = models.ForeignKey(
+        to=DayPreset,
+        on_delete=models.PROTECT,
         related_name="calendar_days",
     )
-    day_preset = models.ForeignKey(
-        to=DayPreset, on_delete=models.DO_NOTHING, related_name="calendar_days"
-    )
 
-    @property
-    def day_of_week(self):
-        return self.date.weekday()
+    class Meta:
+        unique_together = (
+            "user",
+            "day_calendar",
+        )
 
-    def save(self, **kwargs):
-        if not self.total_time_budget:
-            self.total_time_budget = self.day_preset.total_time_budget
-        return super().save(**kwargs)
+    def __str__(self):
+        return f"{self.user.username} - {self.day_calendar}"
 
 
-class RatioPreset(TimeStampedModel):
+class AspectTimePreset(TimeStampedModel):
+    """
+    Model representing a preset time ratio for a user and an aspect.
+    """
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     aspect = models.ForeignKey(
         Aspect, on_delete=models.CASCADE, related_name="ratio_preset"
     )
     preferred_time_spent = models.DurationField()
-
-
-__default_fields = ["created", "modified", "title", "description"]
-
-
-class RatioPresetSerializer(ModelSerializer):
-    class Meta:
-        model = RatioPreset
-        fields = __default_fields + ["aspect", "preferred_time_spent"]
-
-
-class DayPresetSerializer(ModelSerializer):
-    class Meta:
-        model = DayPreset
-        fields = ["created", "modified", "total_time_budget", "day_of_week"]
-
-
-class CalendarDaySerializer(ModelSerializer):
-    class Meta:
-        model = CalendarDay
-        fields = __default_fields + ["date", "calendar_month"]
-
-
-class CalendarMonthSerializer(ModelSerializer):
-    class Meta:
-        model = CalendarMonth
-        fields = __default_fields + ["date"]
