@@ -99,15 +99,3 @@ class UserCalendarDay(TimeUnit):
 
     def __str__(self):
         return f"{self.user.username} - {self.day_calendar}"
-
-
-class AspectTimePreset(TimeStampedModel):
-    """
-    Model representing a preset time ratio for a user and an aspect.
-    """
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    aspect = models.ForeignKey(
-        Aspect, on_delete=models.CASCADE, related_name="ratio_preset"
-    )
-    preferred_time_spent = models.DurationField()
