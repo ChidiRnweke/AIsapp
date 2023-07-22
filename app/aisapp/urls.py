@@ -1,6 +1,6 @@
-from django.urls import path
-from django.views.generic import TemplateView
+from rest_framework.routers import DefaultRouter
+from aisapp.views.todo import UserViewSet
 
-urlpatterns = [
-    path("", TemplateView.as_view(template_name="aisapp/home.html"), name="home")
-]
+router = DefaultRouter()
+router.register(r"users", UserViewSet, basename="user")
+urlpatterns = router.urls

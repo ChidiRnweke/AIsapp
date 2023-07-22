@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'aisapp/user_home.css' %}">
+
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Aisapp</h1>
+    </header>
+    <main class="grid">
+        <article id="next">
+            <h2>Your next few days</h2>
+        </article>
+        <article id="past">
+            <section id="spending">
+                <h2>How you've been spending your time</h2>
+            </section>
+            <section id="spent">
+                <h2>What you've been doing</h2>
+            </section>
+        </article>
+    </main>
+</body>
+
+</html>

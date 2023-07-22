@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "aisapp",
+    "aisapp.apps.AisappConfig",
+    "aisapp_frontend",
     "django_extensions",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
