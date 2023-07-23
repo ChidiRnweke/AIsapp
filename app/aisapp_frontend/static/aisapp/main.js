@@ -19,6 +19,8 @@ const handleRouteChange = () => {
         case '/login':
             renderLoginPage();
             break;
+        case '/setup':
+            renderSetupPage();
         default:
             render404Page();
             break;
@@ -44,6 +46,11 @@ const renderHomePage = () => {
 
 const renderRegisterPage = () => {
     loadView("register");
+    const registerContent = document.getElementById('register');
+    registerContent.addEventListener('loginSuccessful', () => {
+        history.pushState({ page: "setup" }, null, "/setup");
+        handleRouteChange();
+    })
 }
 
 const renderLoginPage = () => {

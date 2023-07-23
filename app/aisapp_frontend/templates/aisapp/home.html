@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{% static 'aisapp/home.css' %}">
 
     <script src="{% static 'aisapp/AppCard.js' %}"></script>
-    <script src="{% static 'aisapp/RegisterForm.js' %}"></script>
+    <script type=module src="{% static 'aisapp/RegisterForm.js' %}"></script>
     <script src="{% static 'aisapp/main.js' %}"></script>
 
 
@@ -94,7 +94,17 @@
     Nothing here yet.
 </template>
 
+<template id="setup">
+    <header>
+        <h1>Login</h1>
+        <p>Continue your journey here.</p>
+    </header>
+    Nothing here yet.
+</template>
+
+
 <body>
+    {% csrf_token %}
     <div id="main-content">
     </div>
     <footer>
