@@ -1,0 +1,32 @@
+header section {
+    display: flex;
+    justify-content: center;
+}
+
+#login-button,
+#register-button {
+    background-color: rgba(69, 178, 233, 0.8);
+    color: white;
+    border: none;
+    border-radius: 10%;
+    padding: 0.8vw;
+    margin: 0 1vw;
+    min-width: 4vw;
+    height: 2.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+#login-button:hover {
+    background-color: rgba(69, 178, 233, 1);
+}
+
+#register-button {
+    background-color: rgba(218, 165, 32, 0.8);
+}
+
+#register-button:hover {
+    background-color: rgba(198, 145, 12, 0.8);
+}

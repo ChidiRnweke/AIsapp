@@ -34,15 +34,6 @@ footer {
     bottom: 0;
 }
 
-header button {
-    background-color: rgba(69, 178, 233, 0.8);
-    color: white;
-    border: none;
-    border-radius: 10%;
-    margin: 0.2vw 0;
-    padding: 0.8vw;
-}
-
 
 header button:hover {
     transform: scale(1.02);
