@@ -56,6 +56,10 @@ class LoginForm extends HTMLElement {
 
     addEventListeners() {
         const toggleElems = this.shadowRoot.querySelectorAll('.toggle-password');
+        const form = this.shadowRoot.querySelector('#login-form');
+        const passwordElem = this.shadowRoot.querySelector('#password');
+        const password2Elem = this.shadowRoot.querySelector('#password2');
+
 
         toggleElems.forEach(toggle => {
             toggle.addEventListener('mousedown', (e) => {
@@ -67,6 +71,22 @@ class LoginForm extends HTMLElement {
             toggle.addEventListener('mouseleave', (e) => {
                 this.hidePassword(e);
             });
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (passwordElem.value.length < 8) {
+                alert('Password must be at least 8 characters long.');
+                return;
+            }
+
+            if (passwordElem.value !== password2Elem.value) {
+                alert('Passwords do not match.');
+                return;
+            }
+
+            console.log('Form submitted!');
         });
     }
 
