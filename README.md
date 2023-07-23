@@ -100,5 +100,3 @@ On accessing the application, `main.js` listens for route changes and loads the 
 4. **Run the Server**: Use Django's `runserver` command to start the development server and access the app through the `home.html` entry point.
 5. **API Usage**: For backend interactions, utilize the provided views or the Django Rest Framework's built-in API views.
 
-Absolutely. I can help structure the information into a README format that explains the frontend handling using Vanilla JS and web components.
-
