@@ -1,5 +1,7 @@
+from django.contrib.auth import password_validation
 from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
+
 from .calendar import (
     DayPreset,
     SharedCalendarDay,
@@ -8,24 +10,42 @@ from .calendar import (
     UserCalendarMonth,
 )
 from .todo import (
+    Aspect,
+    AspectTimePreset,
+    History,
+    Milestone,
     Resource,
     ResourceType,
-    Aspect,
     Task,
-    Milestone,
-    History,
-    AspectTimePreset,
 )
 
 default_fields_calendar = ["created", "modified", "user"]
 default_fields_todo = ["created", "modified", "title", "description", "user"]
-user_fields = ["id", "username", "first_name", "last_name", "email", "date_joined"]
+user_fields = ["id", "username", "first_name", "last_name", "email"]
 
 
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = user_fields
+
+
+class UserCredentialSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = user_fields + ["password"]
+
+    def validate_password(self, value):
+        password_validation.validate_password(value)
+        return value
+
+    def create(self, validated_data):
+        password = validated_data.pop("password")
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+
+        return user
 
 
 class UserDetailSerializer(ModelSerializer):
