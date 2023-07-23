@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from aisapp.views.todo import UserViewSet
+from app.aisapp.views.user import UserViewSet
 
 router = DefaultRouter()
 router.register(r"users", UserViewSet, basename="user")
