@@ -7,11 +7,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 const handleRouteChange = () => {
     const route = window.location.pathname;
-    console.log(route);
+
     switch (route) {
         case '/':
         case '':
             renderHomePage();
+            break;
+        case '/register':
+            renderRegisterPage();
             break;
         case '/login':
             renderLoginPage();
@@ -24,12 +27,23 @@ const handleRouteChange = () => {
 
 const renderHomePage = () => {
     loadView("home");
-    const loginButton = document.querySelector('header button');
+
+    const loginButton = document.querySelector('#login-button');
+    const registerButton = document.querySelector('#register-button');
+
     loginButton.addEventListener('click', () => {
         history.pushState({ page: "login" }, null, "/login");
         handleRouteChange();
     });
 
+    registerButton.addEventListener('click', () => {
+        history.pushState({ page: "register" }, null, "/register");
+        handleRouteChange();
+    });
+}
+
+const renderRegisterPage = () => {
+    loadView("register");
 }
 
 const renderLoginPage = () => {

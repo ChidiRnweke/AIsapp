@@ -1,11 +1,10 @@
-class LoginForm extends HTMLElement {
+class RegisterForm extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
     }
 
     connectedCallback() {
-
         this.render();
         this.addEventListeners();
 
@@ -17,6 +16,7 @@ class LoginForm extends HTMLElement {
             <style>
                 @import url('static/aisapp/login.css');
             </style>
+            
             <main id="main-login">
                 <form id="login-form">
                     <div class="form-group">
@@ -65,9 +65,11 @@ class LoginForm extends HTMLElement {
             toggle.addEventListener('mousedown', (e) => {
                 this.showPassword(e);
             });
+
             toggle.addEventListener('mouseup', (e) => {
                 this.hidePassword(e);
             });
+
             toggle.addEventListener('mouseleave', (e) => {
                 this.hidePassword(e);
             });
@@ -85,7 +87,8 @@ class LoginForm extends HTMLElement {
                 alert('Passwords do not match.');
                 return;
             }
-
+            // TO-DO: send post request to backend
+            // TO-DO: colour the input bars red
             console.log('Form submitted!');
         });
     }
@@ -93,15 +96,17 @@ class LoginForm extends HTMLElement {
     showPassword(e) {
         const inputId = e.currentTarget.getAttribute('data-input');
         const inputElem = this.shadowRoot.querySelector(`#${inputId}`);
+
         inputElem.type = "text";
     }
 
     hidePassword(e) {
         const inputId = e.currentTarget.getAttribute('data-input');
         const inputElem = this.shadowRoot.querySelector(`#${inputId}`);
+
         inputElem.type = "password";
     }
 
 }
 
-customElements.define('login-form', LoginForm);
+customElements.define('register-form', RegisterForm);
