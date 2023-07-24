@@ -21,6 +21,7 @@ const handleRouteChange = () => {
             break;
         case '/setup':
             renderSetupPage();
+            break;
         default:
             render404Page();
             break;
@@ -46,8 +47,7 @@ const renderHomePage = () => {
 
 const renderRegisterPage = () => {
     loadView("register");
-    const registerContent = document.getElementById('register');
-    registerContent.addEventListener('loginSuccessful', () => {
+    document.addEventListener('registrationSuccessful', () => {
         history.pushState({ page: "setup" }, null, "/setup");
         handleRouteChange();
     })
@@ -55,12 +55,19 @@ const renderRegisterPage = () => {
 
 const renderLoginPage = () => {
     loadView("login");
+    document.addEventListener('loginSuccessful', () => {
+        history.pushState({ page: "setup" }, null, "/setup");
+        handleRouteChange();
+    })
+}
+
+const renderSetupPage = () => {
+    loadView("setup");
 }
 
 const render404Page = () => {
     loadView('404');
-    const loginButton = document.getElementById('back-home');
-    loginButton.addEventListener('click', () => {
+    document.addEventListener('click', () => {
         history.pushState({ page: "home" }, null, "/");
         handleRouteChange();
     });

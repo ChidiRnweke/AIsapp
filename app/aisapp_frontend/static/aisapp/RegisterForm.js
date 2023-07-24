@@ -1,6 +1,58 @@
-import { getCookie } from './utils.js';
+import { createUser, loginUser } from './api.js';
 
-class RegisterForm extends HTMLElement {
+class BaseForm extends HTMLElement {
+    displayError(message, duration = null) {
+        this.errorMessageElem.textContent = message;
+        if (duration) {
+            setTimeout(() => {
+                this.errorMessageElem.textContent = '';
+            }, duration);
+        }
+    }
+
+    showPassword(e) {
+        const inputId = e.currentTarget.getAttribute('data-input');
+        const inputElem = this.shadowRoot.querySelector(`#${inputId}`);
+
+        inputElem.type = "text";
+    }
+
+    hidePassword(e) {
+        const inputId = e.currentTarget.getAttribute('data-input');
+        const inputElem = this.shadowRoot.querySelector(`#${inputId}`);
+
+        inputElem.type = "password";
+    }
+
+}
+
+const PasswordToggleMixin = (Base) => class extends Base {
+    addTogglePassword(toggleElems) {
+        toggleElems.forEach(toggle => {
+            toggle.addEventListener('mousedown', (e) => {
+                this.showPassword(e);
+            });
+
+            toggle.addEventListener('mouseup', (e) => {
+                this.hidePassword(e);
+            });
+
+            toggle.addEventListener('mouseleave', (e) => {
+                this.hidePassword(e);
+            });
+
+            toggle.addEventListener('touchstart', (e) => {
+                this.showPassword(e);
+            });
+
+            toggle.addEventListener('touchend', (e) => {
+                this.hidePassword(e);
+            });
+        });
+    }
+}
+
+class RegisterForm extends PasswordToggleMixin(BaseForm) {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -56,38 +108,41 @@ class RegisterForm extends HTMLElement {
             </main>
         `;
     }
-    displayError(message, duration = null) {
-        this.errorMessageElem.textContent = message;
-        if (duration) {
-            setTimeout(() => {
-                this.errorMessageElem.textContent = '';
-            }, duration);
-        }
-    }
+
 
     addEventListeners() {
         const toggleElems = this.shadowRoot.querySelectorAll('.toggle-password');
-        const form = this.shadowRoot.querySelector('#register-form');
-
-
-
         this.addTogglePassword(toggleElems);
+
+        const form = this.shadowRoot.querySelector('#register-form');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
 
             if (this.validatePassword() !== true) {
                 this.errorMessageElem.textContent = "The passwords did not match."
                 return;
             }
 
+            const username = this.shadowRoot.querySelector('#username').value;
+            const firstName = this.shadowRoot.querySelector('#first-name').value;
+            const lastName = this.shadowRoot.querySelector('#last-name').value;
+            const email = this.shadowRoot.querySelector('#email').value;
+            const password = this.shadowRoot.querySelector('#password').value;
+
             try {
-                const response = await this.createUser();
+
+                const response = await createUser({
+                    "username": username,
+                    "first_name": firstName,
+                    "last_name": lastName,
+                    "email": email,
+                    "password": password,
+                });
                 if (response.ok) {
                     this.errorMessageElem.textContent = '';
-                    const successEvent = new CustomEvent("loginSuccessful", { bubbles: true, composed: true })
-                    this.dispatchEvent(successEvent);
+                    const registrationSuccess = new CustomEvent("registrationSuccessful", { bubbles: true, composed: true })
+                    this.dispatchEvent(registrationSuccess);
                 }
                 else {
                     const errors = await response.json();
@@ -107,30 +162,6 @@ class RegisterForm extends HTMLElement {
         });
     }
 
-    addTogglePassword(toggleElems) {
-        toggleElems.forEach(toggle => {
-            toggle.addEventListener('mousedown', (e) => {
-                this.showPassword(e);
-            });
-
-            toggle.addEventListener('mouseup', (e) => {
-                this.hidePassword(e);
-            });
-
-            toggle.addEventListener('mouseleave', (e) => {
-                this.hidePassword(e);
-            });
-
-            toggle.addEventListener('touchstart', (e) => {
-                this.showPassword(e);
-            });
-
-            toggle.addEventListener('touchend', (e) => {
-                this.hidePassword(e);
-            });
-        });
-    }
-
     validatePassword() {
         const passwordElem = this.shadowRoot.querySelector('#password');
         const password2Elem = this.shadowRoot.querySelector('#password2');
@@ -138,50 +169,84 @@ class RegisterForm extends HTMLElement {
 
     }
 
-    async createUser() {
-        const username = this.shadowRoot.querySelector('#username').value;
-        const firstName = this.shadowRoot.querySelector('#first-name').value;
-        const lastName = this.shadowRoot.querySelector('#last-name').value;
-        const email = this.shadowRoot.querySelector('#email').value;
-        const password = this.shadowRoot.querySelector('#password').value;
 
-        return await fetch("/api/users/?format=json", {
-            method: "POST",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": getCookie('csrftoken'),
-            },
-            credentials: 'same-origin',
-            body: JSON.stringify({
-                "username": username,
-                "first_name": firstName,
-                "last_name": lastName,
-                "email": email,
-                "password": password,
-            })
+}
+
+class LoginForm extends PasswordToggleMixin(BaseForm) {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+        this.render();
+        this.addEventListeners();
+        this.errorMessageElem = this.shadowRoot.querySelector('#error-message');
+    }
+
+
+    render() {
+
+        this.shadowRoot.innerHTML = `
+        <style>
+            @import url('static/aisapp/register.css');
+        </style>
+        <main id="main-login">
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">user name</label>
+                    <input type="text" name="username" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">password</label>
+                    <input type="password" name="password" id="password" required minlength="8">
+                    <span class="toggle-password" data-input="password">👁</span>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Login</button>
+                </div>
+                <div id="error-message"></div>
+            </form>
+    </main>
+        `
+    }
+
+    addEventListeners() {
+        const toggleElems = this.shadowRoot.querySelectorAll('.toggle-password');
+        this.addTogglePassword(toggleElems);
+
+        const form = this.shadowRoot.querySelector('#login-form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = this.shadowRoot.querySelector('#username').value;
+            const password = this.shadowRoot.querySelector('#password').value;
+            try {
+                const response = await loginUser({ 'username': username, 'password': password });
+                if (response.ok) {
+                    this.errorMessageElem.textContent = '';
+                    const loginEvent = new CustomEvent("loginSuccessful", { bubbles: true, composed: true })
+                    this.dispatchEvent(loginEvent);
+                }
+                else {
+                    const errors = await response.json();
+                    let allErrors = "";
+                    Object.keys(errors).forEach((key) => {
+                        allErrors += errors[key] + "\n";
+                    });
+                    this.displayError(allErrors.trim());
+                }
+            }
+            catch (error) {
+                console.error("Error while registering:", error);
+                this.displayError("There was a problem registering. Please try again later.");
+            }
+
+
         });
-
-
     }
-
-
-    showPassword(e) {
-        const inputId = e.currentTarget.getAttribute('data-input');
-        const inputElem = this.shadowRoot.querySelector(`#${inputId}`);
-
-        inputElem.type = "text";
-    }
-
-    hidePassword(e) {
-        const inputId = e.currentTarget.getAttribute('data-input');
-        const inputElem = this.shadowRoot.querySelector(`#${inputId}`);
-
-        inputElem.type = "password";
-    }
-
 
 
 }
 
+customElements.define('login-form', LoginForm);
 customElements.define('register-form', RegisterForm);
