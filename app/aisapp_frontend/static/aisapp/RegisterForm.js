@@ -115,7 +115,6 @@ class RegisterForm extends PasswordToggleMixin(BaseForm) {
         this.addTogglePassword(toggleElems);
 
         const form = this.shadowRoot.querySelector('#register-form');
-
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -139,11 +138,13 @@ class RegisterForm extends PasswordToggleMixin(BaseForm) {
                     "email": email,
                     "password": password,
                 });
+
                 if (response.ok) {
                     this.errorMessageElem.textContent = '';
                     const registrationSuccess = new CustomEvent("registrationSuccessful", { bubbles: true, composed: true })
                     this.dispatchEvent(registrationSuccess);
                 }
+
                 else {
                     const errors = await response.json();
                     let allErrors = "";
@@ -152,7 +153,9 @@ class RegisterForm extends PasswordToggleMixin(BaseForm) {
                     });
                     this.displayError(allErrors.trim());
                 }
+
             }
+
             catch (error) {
                 console.error("Error while registering:", error);
                 this.displayError("There was a problem registering. Please try again later.");
@@ -218,15 +221,20 @@ class LoginForm extends PasswordToggleMixin(BaseForm) {
         const form = this.shadowRoot.querySelector('#login-form');
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
             const username = this.shadowRoot.querySelector('#username').value;
             const password = this.shadowRoot.querySelector('#password').value;
+
             try {
+
                 const response = await loginUser({ 'username': username, 'password': password });
+
                 if (response.ok) {
                     this.errorMessageElem.textContent = '';
                     const loginEvent = new CustomEvent("loginSuccessful", { bubbles: true, composed: true })
                     this.dispatchEvent(loginEvent);
                 }
+
                 else {
                     const errors = await response.json();
                     let allErrors = "";
@@ -236,6 +244,7 @@ class LoginForm extends PasswordToggleMixin(BaseForm) {
                     this.displayError(allErrors.trim());
                 }
             }
+
             catch (error) {
                 console.error("Error while registering:", error);
                 this.displayError("There was a problem registering. Please try again later.");
