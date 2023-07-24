@@ -4,12 +4,6 @@ class RegisterForm extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleToggleMouseDown = this.handleToggleMouseDown.bind(this);
-        this.handleToggleMouseUp = this.handleToggleMouseUp.bind(this);
-        this.handleToggleMouseLeave = this.handleToggleMouseLeave.bind(this);
-        this.handleToggleTouchStart = this.handleToggleTouchStart.bind(this);
-        this.handleToggleTouchEnd = this.handleToggleTouchEnd.bind(this);
     }
 
     connectedCallback() {
