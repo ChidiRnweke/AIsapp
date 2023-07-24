@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from django.contrib.auth.models import User
 from aisapp.models.serializers import UserCredentialSerializer
-from rest_framework import permissions
+from aisapp.permissions import IsUserOrDenied
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -11,14 +11,10 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all()
     serializer_class = UserCredentialSerializer
+    permission_classes = [IsUserOrDenied]
 
-    def get_permissions(self):
-        """
-        Instantiates and returns the list of permissions that this view requires.
-        """
-        if self.action in ["update", "partial_update", "destroy", "list", "retrieve"]:
-            permission_classes = [permissions.IsAuthenticated]
-        else:  # e.g., "create"
-            permission_classes = [permissions.AllowAny]
-
-        return [permission() for permission in permission_classes]
+    def get_queryset(self):
+        user = self.request.user
+        if user and user.is_authenticated:
+            return self.queryset.filter(id=user.id)  # type: ignore
+        return User.objects.none()
