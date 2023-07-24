@@ -18,7 +18,7 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         if self.action in ["update", "partial_update", "destroy", "list", "retrieve"]:
             permission_classes = [permissions.IsAuthenticated]
-        else:
+        else:  # e.g., "create"
             permission_classes = [permissions.AllowAny]
 
         return [permission() for permission in permission_classes]
