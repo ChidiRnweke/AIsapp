@@ -82,25 +82,16 @@ class DayPresetSerializer(ModelSerializer):
         fields = default_fields_calendar + ["total_time_budget", "day_of_week"]
 
 
-class CalendarDaySerializer(ModelSerializer):
+class SharedCalendarDaySerializer(ModelSerializer):
     class Meta:
         model = SharedCalendarDay
-        fields = default_fields_calendar + [
-            "date",
-            "calendar_month",
-            "total_time_budget",
-            "total_time_spent",
-        ]
+        fields = ["date"]
 
 
-class CalendarMonthSerializer(ModelSerializer):
+class SharedCalendarMonthSerializer(ModelSerializer):
     class Meta:
         model = SharedCalendarMonth
-        fields = default_fields_calendar + [
-            "date",
-            "total_time_budget",
-            "total_time_spent",
-        ]
+        fields = ["date"]
 
 
 class UserCalendarDaySerializer(ModelSerializer):

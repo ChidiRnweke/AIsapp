@@ -3,11 +3,14 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.routers import DefaultRouter
 
 from aisapp.views.user import UserViewSet
+from aisapp.views.calendar import DayPresetViewSet
+
 from aisapp.views.tokens import CookieTokenObtainPairView, CookieTokenRefreshView
 
 
 router = DefaultRouter()
 router.register(r"users", UserViewSet, basename="user")
+router.register(r"day-preset", DayPresetViewSet, basename="day preset")
 
 
 urlpatterns = [
