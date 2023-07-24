@@ -7,7 +7,7 @@ from aisapp.views.tokens import CookieTokenObtainPairView, CookieTokenRefreshVie
 
 
 router = DefaultRouter()
-router.register(r"user", UserViewSet, basename="user")
+router.register(r"users", UserViewSet, basename="user")
 
 
 urlpatterns = [
