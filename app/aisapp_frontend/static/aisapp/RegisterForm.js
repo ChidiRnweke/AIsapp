@@ -1,6 +1,6 @@
 import { createUser, loginUser } from './api.js';
 
-class BaseForm extends HTMLElement {
+class BasePasswordForm extends HTMLElement {
     displayError(message, duration = null) {
         this.errorMessageElem.textContent = message;
         if (duration) {
@@ -52,7 +52,7 @@ const PasswordToggleMixin = (Base) => class extends Base {
     }
 }
 
-class RegisterForm extends PasswordToggleMixin(BaseForm) {
+class RegisterForm extends PasswordToggleMixin(BasePasswordForm) {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -175,7 +175,7 @@ class RegisterForm extends PasswordToggleMixin(BaseForm) {
 
 }
 
-class LoginForm extends PasswordToggleMixin(BaseForm) {
+class LoginForm extends PasswordToggleMixin(BasePasswordForm) {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
