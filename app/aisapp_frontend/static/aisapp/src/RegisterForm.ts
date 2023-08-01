@@ -73,7 +73,7 @@ class RegisterForm extends PasswordToggleMixin(BasePasswordForm) {
 
         this.shadowRoot!.innerHTML = `
             <style>
-                @import url('static/aisapp/register.css');
+                @import url('static/aisapp/css/register.css');
             </style>
 
             <main id="main-register">
