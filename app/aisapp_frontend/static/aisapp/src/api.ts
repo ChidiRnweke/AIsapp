@@ -5,7 +5,20 @@ const headers = {
     "X-CSRFToken": getCookie('csrftoken'),
 };
 
-export async function createUser(userData) {
+interface registerCredentials {
+    username: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
+}
+
+interface loginCredentials {
+    username: string;
+    password: string;
+}
+
+export async function createUser(userData: registerCredentials): Promise<Response> {
     const response = await fetch("/api/users/?format=json", {
         method: "POST",
         mode: "cors",
@@ -16,7 +29,7 @@ export async function createUser(userData) {
     return response;
 }
 
-export async function loginUser(credentials) {
+export async function loginUser(credentials: loginCredentials): Promise<Response> {
     const response = await fetch("/api/token/?format=json", {
         method: "POST",
         mode: "cors",

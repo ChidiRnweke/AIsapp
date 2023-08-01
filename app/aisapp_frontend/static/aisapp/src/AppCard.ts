@@ -4,15 +4,15 @@ class AppCard extends HTMLElement {
         this.attachShadow({ mode: 'open' });
     }
 
-    connectedCallback() {
+    connectedCallback(): void {
         const reversed = this.hasAttribute('reversed');
         this.render(reversed);
     }
 
-    render(reversed) {
-        this.shadowRoot.innerHTML = `
+    render(reversed: boolean): void {
+        this.shadowRoot!.innerHTML = `
         <style>
-            @import url('static/aisapp/AppCard.css');
+            @import url('static/aisapp/css/AppCard.css');
         </style>
 
             <article class="card ${reversed ? 'reverse' : ''}">

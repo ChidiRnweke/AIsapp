@@ -1,5 +1,5 @@
-export const getCookie = (name) => {
-    let cookieValue = null;
+export const getCookie = (name: string): string => {
+    let cookieValue: string | undefined = undefined;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
@@ -9,6 +9,9 @@ export const getCookie = (name) => {
                 break;
             }
         }
+    }
+    if (cookieValue === undefined) {
+        throw new Error(`Cookie with the name "${name}" not found.`);
     }
     return cookieValue;
 }

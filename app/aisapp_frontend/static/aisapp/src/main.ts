@@ -1,11 +1,11 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function (): void {
 
     window.addEventListener('popstate', handleRouteChange);
     handleRouteChange();
 
 });
 
-const handleRouteChange = () => {
+const handleRouteChange = (): void => {
     const route = window.location.pathname;
 
     switch (route) {
@@ -28,54 +28,54 @@ const handleRouteChange = () => {
     }
 }
 
-const renderHomePage = () => {
+const renderHomePage = (): void => {
     loadView("home");
 
-    const loginButton = document.querySelector('#login-button');
-    const registerButton = document.querySelector('#register-button');
+    const loginButton = document.querySelector('#login-button')!;
+    const registerButton = document.querySelector('#register-button')!;
 
     loginButton.addEventListener('click', () => {
-        history.pushState({ page: "login" }, null, "/login");
+        history.pushState({ page: "login" }, '', "/login");
         handleRouteChange();
     });
 
     registerButton.addEventListener('click', () => {
-        history.pushState({ page: "register" }, null, "/register");
+        history.pushState({ page: "register" }, '', "/register");
         handleRouteChange();
     });
 }
 
-const renderRegisterPage = () => {
+const renderRegisterPage = (): void => {
     loadView("register");
     document.addEventListener('registrationSuccessful', () => {
-        history.pushState({ page: "setup" }, null, "/setup");
+        history.pushState({ page: "setup" }, '', "/setup");
         handleRouteChange();
     })
 }
 
-const renderLoginPage = () => {
+const renderLoginPage = (): void => {
     loadView("login");
     document.addEventListener('loginSuccessful', () => {
-        history.pushState({ page: "setup" }, null, "/setup");
+        history.pushState({ page: "setup" }, '', "/setup");
         handleRouteChange();
     })
 }
 
-const renderSetupPage = () => {
+const renderSetupPage = (): void => {
     loadView("setup");
 }
 
-const render404Page = () => {
+const render404Page = (): void => {
     loadView('404');
     document.addEventListener('click', () => {
-        history.pushState({ page: "home" }, null, "/");
+        history.pushState({ page: "home" }, '', "/");
         handleRouteChange();
     });
 }
 
-const loadView = (templateId) => {
-    const mainContent = document.getElementById('main-content');
-    const template = document.getElementById(templateId);
+const loadView = (templateId: string) => {
+    const mainContent = document.getElementById('main-content')!;
+    const template = (document.getElementById(templateId) as HTMLTemplateElement);
     const clone = document.importNode(template.content, true);
 
     mainContent.innerHTML = '';

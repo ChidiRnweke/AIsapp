@@ -1,7 +1,8 @@
 import { createUser, loginUser } from './api.js';
 
 class BasePasswordForm extends HTMLElement {
-    displayError(message, duration = null) {
+    errorMessageElem!: HTMLElement;
+    displayError(message: string, duration: number | null = null) {
         this.errorMessageElem.textContent = message;
         if (duration) {
             setTimeout(() => {
@@ -10,24 +11,28 @@ class BasePasswordForm extends HTMLElement {
         }
     }
 
-    showPassword(e) {
-        const inputId = e.currentTarget.getAttribute('data-input');
-        const inputElem = this.shadowRoot.querySelector(`#${inputId}`);
+    showPassword(e: Event) {
+        const inputId = (e.currentTarget as HTMLElement).getAttribute('data-input');
+        const inputElem = this.shadowRoot!.querySelector<HTMLInputElement>(`#${inputId}`);
 
-        inputElem.type = "text";
+        if (inputElem) {
+            inputElem.type = "text";
+        }
     }
 
-    hidePassword(e) {
-        const inputId = e.currentTarget.getAttribute('data-input');
-        const inputElem = this.shadowRoot.querySelector(`#${inputId}`);
+    hidePassword(e: Event) {
+        const inputId = (e.currentTarget as HTMLElement).getAttribute('data-input');
+        const inputElem = this.shadowRoot!.querySelector<HTMLInputElement>(`#${inputId}`);
 
-        inputElem.type = "password";
+        if (inputElem) {
+            inputElem.type = "password";
+        }
     }
 
 }
 
-const PasswordToggleMixin = (Base) => class extends Base {
-    addTogglePassword(toggleElems) {
+const PasswordToggleMixin = (Base: typeof BasePasswordForm) => class extends Base {
+    addTogglePassword(toggleElems: NodeListOf<HTMLElement>): void {
         toggleElems.forEach(toggle => {
             toggle.addEventListener('mousedown', (e) => {
                 this.showPassword(e);
@@ -58,15 +63,15 @@ class RegisterForm extends PasswordToggleMixin(BasePasswordForm) {
         this.attachShadow({ mode: 'open' });
     }
 
-    connectedCallback() {
+    connectedCallback(): void {
         this.render();
         this.addEventListeners();
-        this.errorMessageElem = this.shadowRoot.querySelector('#error-message');
+        this.errorMessageElem = this.shadowRoot!.querySelector<HTMLElement>('#error-message')!;
     }
 
-    render() {
+    render(): void {
 
-        this.shadowRoot.innerHTML = `
+        this.shadowRoot!.innerHTML = `
             <style>
                 @import url('static/aisapp/register.css');
             </style>
@@ -110,12 +115,12 @@ class RegisterForm extends PasswordToggleMixin(BasePasswordForm) {
     }
 
 
-    addEventListeners() {
-        const toggleElems = this.shadowRoot.querySelectorAll('.toggle-password');
+    addEventListeners(): void {
+        const toggleElems = this.shadowRoot!.querySelectorAll<HTMLElement>('.toggle-password');
         this.addTogglePassword(toggleElems);
 
-        const form = this.shadowRoot.querySelector('#register-form');
-        form.addEventListener('submit', async (e) => {
+        const form = this.shadowRoot!.querySelector('#register-form')!;
+        form.addEventListener('submit', async (e: Event) => {
             e.preventDefault();
 
             if (this.validatePassword() !== true) {
@@ -123,11 +128,11 @@ class RegisterForm extends PasswordToggleMixin(BasePasswordForm) {
                 return;
             }
 
-            const username = this.shadowRoot.querySelector('#username').value;
-            const firstName = this.shadowRoot.querySelector('#first-name').value;
-            const lastName = this.shadowRoot.querySelector('#last-name').value;
-            const email = this.shadowRoot.querySelector('#email').value;
-            const password = this.shadowRoot.querySelector('#password').value;
+            const username = this.shadowRoot!.querySelector<HTMLInputElement>('#username')!.value;
+            const firstName = this.shadowRoot!.querySelector<HTMLInputElement>('#first-name')!.value;
+            const lastName = this.shadowRoot!.querySelector<HTMLInputElement>('#last-name')!.value;
+            const email = this.shadowRoot!.querySelector<HTMLInputElement>('#email')!.value;
+            const password = this.shadowRoot!.querySelector<HTMLInputElement>('#password')!.value;
 
             try {
 
@@ -165,9 +170,9 @@ class RegisterForm extends PasswordToggleMixin(BasePasswordForm) {
         });
     }
 
-    validatePassword() {
-        const passwordElem = this.shadowRoot.querySelector('#password');
-        const password2Elem = this.shadowRoot.querySelector('#password2');
+    validatePassword(): boolean {
+        const passwordElem = this.shadowRoot!.querySelector<HTMLInputElement>('#password')!;
+        const password2Elem = this.shadowRoot!.querySelector<HTMLInputElement>('#password2')!;
         return passwordElem.value === password2Elem.value;
 
     }
@@ -181,18 +186,18 @@ class LoginForm extends PasswordToggleMixin(BasePasswordForm) {
         this.attachShadow({ mode: 'open' });
     }
 
-    connectedCallback() {
+    connectedCallback(): void {
         this.render();
         this.addEventListeners();
-        this.errorMessageElem = this.shadowRoot.querySelector('#error-message');
+        this.errorMessageElem = this.shadowRoot!.querySelector<HTMLElement>('#error-message')!;
     }
 
 
-    render() {
+    render(): void {
 
-        this.shadowRoot.innerHTML = `
+        this.shadowRoot!.innerHTML = `
         <style>
-            @import url('static/aisapp/register.css');
+            @import url('static/aisapp/css/register.css');
         </style>
         <main id="main-login">
             <form id="login-form">
@@ -214,16 +219,16 @@ class LoginForm extends PasswordToggleMixin(BasePasswordForm) {
         `
     }
 
-    addEventListeners() {
-        const toggleElems = this.shadowRoot.querySelectorAll('.toggle-password');
+    addEventListeners(): void {
+        const toggleElems = this.shadowRoot!.querySelectorAll<HTMLElement>('.toggle-password');
         this.addTogglePassword(toggleElems);
 
-        const form = this.shadowRoot.querySelector('#login-form');
-        form.addEventListener('submit', async (e) => {
+        const form = this.shadowRoot!.querySelector<HTMLElement>('#login-form')!;
+        form.addEventListener('submit', async (e: Event) => {
             e.preventDefault();
 
-            const username = this.shadowRoot.querySelector('#username').value;
-            const password = this.shadowRoot.querySelector('#password').value;
+            const username = this.shadowRoot!.querySelector<HTMLInputElement>('#username')!.value;
+            const password = this.shadowRoot!.querySelector<HTMLInputElement>('#password')!.value;
 
             try {
 

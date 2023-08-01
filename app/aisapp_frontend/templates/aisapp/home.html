@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Aisapp</title>
 
-    <link rel="stylesheet" href="{% static 'aisapp/common.css' %}">
-    <link rel="stylesheet" href="{% static 'aisapp/404.css' %}">
-    <link rel="stylesheet" href="{% static 'aisapp/home.css' %}">
+    <link rel="stylesheet" href="{% static 'aisapp/css/common.css' %}">
+    <link rel="stylesheet" href="{% static 'aisapp/css/404.css' %}">
+    <link rel="stylesheet" href="{% static 'aisapp/css/home.css' %}">
 
-    <script src="{% static 'aisapp/AppCard.js' %}"></script>
-    <script type=module src="{% static 'aisapp/RegisterForm.js' %}"></script>
+    <script src="{% static 'aisapp/dist/AppCard.js' %}"></script>
+    <script type=module src="{% static 'aisapp/dist/RegisterForm.js' %}"></script>
 
-    <script src="{% static 'aisapp/main.js' %}"></script>
+    <script src="{% static 'aisapp/dist/main.js' %}"></script>
 
 
 </head>
@@ -99,6 +99,32 @@
         <h1>Setup</h1>
         <p>Let's set up a few things before you can really start.</p>
     </header>
+    <body>
+        <form>
+            <div class="form-group">
+                <h4>How much time do you have during the week on average?</h4>
+                <input type="range" id="week-time" min="0" max="24">
+                <label for="week-time">Time(hours)</label>
+            </div>
+        </form>
+        <form>
+            <div class="form-group">
+                <h4>How much time do you have during the weekend on average?</h4>
+                <input type="range" id="weekend-time" min="0" max="24">
+                <label for="weekend-time">Time(hours)</label>
+            </div>
+        </form>
+
+        <body>
+            <form>
+                <div class="form-group">            
+                    <input type="range" id="monday" min="0" max="12" step="1">
+                    <input type="submit" value="submit">
+                    <label for="monday">Monday</label>
+                </div>
+        </form>
+    </body>
+    </body>
 </template>
 
 
