@@ -1,10 +1,4 @@
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 80vh;
-    padding: 1vw;
-}
+
 
 form {
     width: 30vw;
@@ -15,12 +9,12 @@ form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-form label {
+label {
     display: block;
     margin-bottom: 0.2vw;
 }
 
-form input {
+input {
     width: 100%;
     padding: 0.5vw;
     margin-bottom: 1.25vw;
@@ -31,13 +25,13 @@ form input {
     transition: background 0.3s, transform 0.3s;
 }
 
-form input:focus {
+input:focus {
     background: rgba(255, 255, 255, 0.2);
     transform: scale(1.02);
     outline: none;
 }
 
-form button {
+button {
     background-color: rgba(69, 178, 233, 0.8);
     color: white;
     border: none;
@@ -49,7 +43,7 @@ form button {
     margin: 0 auto;
 }
 
-form button:hover {
+button:hover {
     background-color: rgba(69, 178, 233, 1);
     transform: scale(1.02);
 }
@@ -84,4 +78,14 @@ form button:hover {
 #error-message {
     color: rgb(255, 111, 0);
     text-align: center;
+}
+
+.invalid-input {
+    border: 2px solid red;
+}
+
+.invalid-feedback {
+    color: red;
+    font-size: 12px;
+    padding-top: 2px;
 }

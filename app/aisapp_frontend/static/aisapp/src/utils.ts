@@ -1,17 +1,15 @@
-export const getCookie = (name: string): string => {
-    let cookieValue: string | undefined = undefined;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
+export const getElementOrThrow = <T extends Element>(source: Document | ShadowRoot, selector: string): T => {
+    const element = source.querySelector<T>(selector);
+    if (!element) {
+        throw new Error(`Element with selector "${selector}" was not found in the light DOM.`);
     }
-    if (cookieValue === undefined) {
-        throw new Error(`Cookie with the name "${name}" not found.`);
+    return element;
+}
+
+export const getAttributeOrThrow = (source: Element, attributeName: string): string => {
+    const attribute = source.getAttribute(attributeName);
+    if (!attribute) {
+        throw new Error(`attribute with selector "${attribute}" was not found!`);
     }
-    return cookieValue;
+    return attribute;
 }

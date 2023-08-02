@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="{% static 'aisapp/css/home.css' %}">
 
     <script src="{% static 'aisapp/dist/AppCard.js' %}"></script>
-    <script type=module src="{% static 'aisapp/dist/RegisterForm.js' %}"></script>
+    <script src="{% static 'aisapp/dist/SequentialSlider.js' %}"></script>
+
+    <script type=module src="{% static 'aisapp/dist/FormComponents.js' %}"></script>
 
     <script src="{% static 'aisapp/dist/main.js' %}"></script>
 
@@ -83,7 +85,17 @@
         <h1>Create your account</h1>
         <p>Start your journey here.</p>
     </header>
-    <register-form></register-form>
+    <main id="main-register">
+        <base-form action-type="register">
+            <form-group label="Username" name="username" type="text" id="username" required></form-group>
+            <form-group label="First Name" name="first-name" type="text" id="first-name" required></form-group>
+            <form-group label="Last Name" name="last-name" type="text" id="last-name" required></form-group>
+            <form-group label="Email" name="email" type="email" id="email" required></form-group>
+            <password-form-group label="Password" name="password" id="password" aria-required="true"></password-form-group>
+            <password-form-group label="Confirm Password" name="password2" id="password2" aria-required="true"></password-form-group>
+            <submit-group slot="submit-group" label="register"></submit-group>
+        </base-form>
+    </main>
 </template>
 
 <template id="login">
@@ -91,7 +103,13 @@
         <h1>Login</h1>
         <p>Continue your journey here.</p>
     </header>
-    <login-form></login-form>
+    <main id="main-login"> 
+        <base-form action-type="login">
+            <form-group label="Username" name="username" type="text" id="username"></form-group>
+            <password-form-group label="Password" name="password" id="password" aria-required="true"></password-form-group>
+            <submit-group slot="submit-group" label="register"></submit-group>
+        </base-form>
+    </main>
 </template>
 
 <template id="setup">
@@ -99,32 +117,32 @@
         <h1>Setup</h1>
         <p>Let's set up a few things before you can really start.</p>
     </header>
-    <body>
-        <form>
-            <div class="form-group">
-                <h4>How much time do you have during the week on average?</h4>
-                <input type="range" id="week-time" min="0" max="24">
-                <label for="week-time">Time(hours)</label>
-            </div>
-        </form>
-        <form>
-            <div class="form-group">
-                <h4>How much time do you have during the weekend on average?</h4>
-                <input type="range" id="weekend-time" min="0" max="24">
-                <label for="weekend-time">Time(hours)</label>
-            </div>
-        </form>
-
-        <body>
-            <form>
-                <div class="form-group">            
-                    <input type="range" id="monday" min="0" max="12" step="1">
-                    <input type="submit" value="submit">
-                    <label for="monday">Monday</label>
-                </div>
-        </form>
-    </body>
-    </body>
+    <main>
+        <sequential-slider data-validator="form">
+            <article>
+                <form>
+                    <div class="form-group">
+                        <h4>How much time do you generally have during the week</h4>
+                        <label for="week-time">Time(hours)</label>
+                        <input type="range" id="week-time" min="0" max="24">
+                    </div>
+                    <div class="form-group">
+                        <label for="weekend-time">Time(hours)</label>
+                        <input type="range" id="weekend-time" min="0" max="24">
+                    </div>
+                </form>
+            </article>
+            <article>
+                <form>
+                    <div class="form-group">            
+                        <input type="range" id="monday" min="0" max="12" step="1">
+                        <input type="submit" value="submit">
+                        <label for="monday">Monday</label>
+                    </div>
+                </form>
+            </article>
+        </sequential-slider>
+    </main>
 </template>
 
 
