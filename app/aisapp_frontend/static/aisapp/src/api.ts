@@ -21,7 +21,7 @@ const headers = {
     "X-CSRFToken": getCookie('csrftoken'),
 };
 
-interface registerCredentials {
+type registerCredentials = {
     username: string;
     first_name: string;
     last_name: string;
@@ -29,7 +29,7 @@ interface registerCredentials {
     password: string;
 }
 
-interface loginCredentials {
+type loginCredentials = {
     username: string;
     password: string;
 }
