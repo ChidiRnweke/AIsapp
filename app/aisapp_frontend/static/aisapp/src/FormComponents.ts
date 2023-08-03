@@ -19,7 +19,7 @@ class PasswordFormGroup extends HTMLElement {
 
         this.shadowRoot!.innerHTML = `
         <style>
-            @import url('static/aisapp/css/register.css');
+            @import url('static/aisapp/css/forms.css');
         </style>
         <div class="form-group">
             <label for="${name}">${this.getAttribute('label')}</label>
@@ -75,7 +75,7 @@ class FormGroup extends HTMLElement {
 
         this.shadowRoot!.innerHTML = `
         <style>
-            @import url('static/aisapp/css/register.css');
+            @import url('static/aisapp/css/forms.css');
         </style>
         <div class="form-group">
             <label for="${name}">${this.getAttribute('label')}</label>
@@ -113,7 +113,7 @@ class SubmitFormGroup extends HTMLElement {
 
         this.shadowRoot!.innerHTML = `
         <style>
-            @import url('static/aisapp/css/register.css');
+            @import url('static/aisapp/css/forms.css');
         </style>
         <div class="form-group">
             <button type="submit" id = "${id}">${label}</button>
@@ -209,7 +209,7 @@ class BaseForm extends HTMLElement {
     render(): void {
         this.shadowRoot!.innerHTML = `
             <style>
-                @import url('static/aisapp/css/register.css');
+                @import url('static/aisapp/css/forms.css');
             </style>
                 <form id="${this.actionType}-form">
                     <slot></slot>
