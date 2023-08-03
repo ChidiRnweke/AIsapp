@@ -2,6 +2,7 @@ import { createUser, loginUser } from './api.js';
 import { getElementOrThrow } from "./utils.js";
 
 interface CustomFormInterface extends HTMLElement {
+    actionType: string;
     errorMessageElem: HTMLElement;
     displayError(error: string): void;
 
@@ -114,5 +115,13 @@ export class RegistrationHandler implements FormHandler {
     }
 }
 
-
-
+export const getFormHandler = (baseForm: CustomFormInterface): FormHandler => {
+    switch (baseForm.actionType) {
+        case 'login':
+            return new LoginHandler(baseForm);
+        case 'register':
+            return new RegistrationHandler(baseForm);
+        default:
+            throw new Error(`There is no handler available for actionType = ${baseForm.actionType}`)
+    }
+}

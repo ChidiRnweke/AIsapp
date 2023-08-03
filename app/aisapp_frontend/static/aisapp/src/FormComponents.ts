@@ -1,5 +1,5 @@
 
-import { FormHandler, RegistrationHandler, LoginHandler } from "./formHandlers.js";
+import { FormHandler, getFormHandler } from "./formHandlers.js";
 import { getElementOrThrow, getAttributeOrThrow } from "./utils.js";
 
 class PasswordFormGroup extends HTMLElement {
@@ -201,7 +201,7 @@ class BaseForm extends HTMLElement {
     connectedCallback(): void {
         this.render();
         this.errorMessageElem = getElementOrThrow<HTMLElement>(this.shadowRoot!, '#error-message');
-        this.formHandler = this.getFormHandler();
+        this.formHandler = getFormHandler(this);
         this.attachEventListeners();
 
     }
@@ -254,18 +254,9 @@ class BaseForm extends HTMLElement {
         return allValid
     }
 
-    getFormHandler(): FormHandler {
-        switch (this.actionType) {
-            case 'login':
-                return new LoginHandler(this);
-            case 'register':
-                return new RegistrationHandler(this);
-            default:
-                throw new Error(`There is no handler available for actionType = ${this.actionType}`)
-        }
-
-    }
 }
+
+
 
 customElements.define('base-form', BaseForm);
 customElements.define('password-form-group', PasswordFormGroup);
