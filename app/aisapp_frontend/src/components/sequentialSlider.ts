@@ -30,41 +30,7 @@ class SequentialSlider extends HTMLElement {
     render(): void {
         this.shadowRoot!.innerHTML = `
         <style>
-            ::slotted(article) {
-                display: none;
-            }
-            
-            ::slotted(.active) {
-                display: block;
-            }
-
-            #previous, #next {
-                padding: 10px 20px;
-                color: #fff;
-                background-color: rgba(69, 178, 233, 0.8);
-                border: 1px solid rgba(255, 255, 255, 0.5);
-                border-radius: 10%;
-                cursor: pointer;
-                font-size: 1em;
-                transition: background-color 0.3s ease, transform 0.3s;
-                margin: 1vw 1.25vw;
-            }
-
-            #previous:hover, #next:hover {
-                background-color: rgba(69, 178, 233, 1);
-                transform: scale(1.02);
-            }
-
-            #previous:disabled, #next:disabled {
-                background-color: rgba(0, 0, 0, 0.4);
-                cursor: not-allowed;
-            }
-
-            .navigation-buttons {
-                display: flex;
-                margin-top: 2vw;
-                justify-content: right;
-            }
+            @import url('static/aisapp/css/slider.css');
         </style>
         <slot></slot>
         <div class="navigation-buttons">
