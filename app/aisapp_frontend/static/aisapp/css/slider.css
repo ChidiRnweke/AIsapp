@@ -1,0 +1,21 @@
+::slotted(*) {
+    opacity: 0;
+    transition: opacity 0.5s; 
+    pointer-events: none; 
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+::slotted(.active) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+::slotted(.form-group) {
+    position: relative;
+    width: 100%;
+}
