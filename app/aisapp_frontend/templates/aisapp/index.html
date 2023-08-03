@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{% static 'aisapp/css/home.css' %}">
 
     <script src="{% static 'aisapp/dist/components/appCard.js' %}"></script>
-    <script src="{% static 'aisapp/dist/components/sequentialSlider.js' %}"></script>
+    <script type="module" src="{% static 'aisapp/dist/components/sequentialSlider.js' %}"></script>
 
     <script type=module src="{% static 'aisapp/dist/components/formComponents.js' %}"></script>
 
@@ -121,7 +121,7 @@
         <p>Let's set up a few things before you can really start.</p>
     </header>
     <main>
-        <sequential-slider data-validator="form">
+        <sequential-slider data-validator="basic">
             <article>
                 <base-form action-type="login">
                     <section class="slider-output-container">
