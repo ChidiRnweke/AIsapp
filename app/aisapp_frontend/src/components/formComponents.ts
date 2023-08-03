@@ -89,7 +89,7 @@ class OutputCard extends HTMLElement {
             }
         </style>
     
-            <output>${defaultValue}</style>
+            <output>${defaultValue}</output>
         `
     }
 }
