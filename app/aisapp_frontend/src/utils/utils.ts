@@ -9,7 +9,7 @@ export const getElementOrThrow = <T extends Element>(source: Document | ShadowRo
 export const getAttributeOrThrow = (source: Element, attributeName: string): string => {
     const attribute = source.getAttribute(attributeName);
     if (!attribute) {
-        throw new Error(`attribute with selector "${attribute}" was not found!`);
+        throw new Error(`attribute with selector "${attributeName}" was not found!`);
     }
     return attribute;
 }
