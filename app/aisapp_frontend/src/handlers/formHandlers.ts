@@ -1,5 +1,5 @@
-import { createUser, loginUser } from './api.js';
-import { getElementOrThrow } from "./utils.js";
+import { createUser, loginUser } from '../utils/api.js';
+import { getElementOrThrow } from "../utils/utils.js";
 
 interface CustomFormInterface extends HTMLElement {
     actionType: string;

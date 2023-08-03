@@ -1,6 +1,6 @@
 
-import { FormHandler, getFormHandler } from "./formHandlers.js";
-import { getElementOrThrow, getAttributeOrThrow } from "./utils.js";
+import { FormHandler, getFormHandler } from "../handlers/formHandlers.js";
+import { getElementOrThrow, getAttributeOrThrow } from "../utils/utils.js";
 
 class PasswordFormGroup extends HTMLElement {
     constructor() {
