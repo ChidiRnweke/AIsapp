@@ -1,4 +1,4 @@
-export const getElementOrThrow = <T extends Element>(source: Document | ShadowRoot, selector: string): T => {
+export const getElementOrThrow = <T extends Element>(source: Document | ShadowRoot | HTMLElement, selector: string): T => {
     const element = source.querySelector<T>(selector);
     if (!element) {
         const querySource = source instanceof Document ? "light DOM" : "Shadow Root"
