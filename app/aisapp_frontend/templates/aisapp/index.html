@@ -91,8 +91,10 @@
             <form-group label="First Name" name="first-name" type="text" id="first-name" required></form-group>
             <form-group label="Last Name" name="last-name" type="text" id="last-name" required></form-group>
             <form-group label="Email" name="email" type="email" id="email" required></form-group>
-            <password-form-group label="Password" name="password" id="password" aria-required="true"></password-form-group>
-            <password-form-group label="Confirm Password" name="password2" id="password2" aria-required="true"></password-form-group>
+            <password-form-group label="Password" name="password" id="password"
+                aria-required="true"></password-form-group>
+            <password-form-group label="Confirm Password" name="password2" id="password2"
+                aria-required="true"></password-form-group>
             <submit-group slot="submit-group" label="register"></submit-group>
         </base-form>
     </main>
@@ -103,10 +105,11 @@
         <h1>Login</h1>
         <p>Continue your journey here.</p>
     </header>
-    <main id="main-login"> 
+    <main id="main-login">
         <base-form action-type="login">
             <form-group label="Username" name="username" type="text" id="username"></form-group>
-            <password-form-group label="Password" name="password" id="password" aria-required="true"></password-form-group>
+            <password-form-group label="Password" name="password" id="password"
+                aria-required="true"></password-form-group>
             <submit-group slot="submit-group" label="register"></submit-group>
         </base-form>
     </main>
@@ -120,21 +123,28 @@
     <main>
         <sequential-slider data-validator="form">
             <article>
-                <form>
-                    <div class="form-group">
-                        <h4>How much time do you generally have during the week</h4>
-                        <label for="week-time">Time(hours)</label>
-                        <input type="range" id="week-time" min="0" max="24">
-                    </div>
-                    <div class="form-group">
-                        <label for="weekend-time">Time(hours)</label>
-                        <input type="range" id="weekend-time" min="0" max="24">
-                    </div>
-                </form>
+                <base-form action-type="login">
+                    <section class="slider-output-container">
+                        <h4>How much time do you generally have on week days?</h4>
+                        <div class="slider">
+                            <form-group label="Time(hours)" name="week-time" type="range" id="week-time" min="0"
+                                max="12" value="2"></form-group>
+                            <output-card target-id="week-time"></output-card>
+                        </div>
+                    </section>
+                    <section class="slider-output-container">
+                        <h4>How much time do you generally have during the weekend?</h4>
+                        <div class="slider">
+                            <form-group label="Time(hours)" name="weekend-time" type="range" id="weekend-time" min="0"
+                                max="12" value="4"></form-group>
+                            <output-card target-id="weekend-time"></output-card>
+                        </div>
+                    </section>
+                </base-form>
             </article>
             <article>
                 <form>
-                    <div class="form-group">            
+                    <div class="form-group">
                         <input type="range" id="monday" min="0" max="12" step="1">
                         <input type="submit" value="submit">
                         <label for="monday">Monday</label>

@@ -1,6 +1,6 @@
 
 import { FormHandler, getFormHandler } from "../handlers/formHandlers.js";
-import { getElementOrThrow, getAttributeOrThrow } from "../utils/utils.js";
+import { getElementOrThrow, getAttributeOrThrow, getOptionalAttribute } from "../utils/utils.js";
 
 class PasswordFormGroup extends HTMLElement {
     constructor() {
@@ -14,8 +14,8 @@ class PasswordFormGroup extends HTMLElement {
     }
 
     render() {
-        const name = this.getAttribute('name') || ''
-        const id = this.getAttribute('id') || ''
+        const name = getAttributeOrThrow(this, 'name');
+        const id = this.getAttribute('id') || '';
 
         this.shadowRoot!.innerHTML = `
         <style>
@@ -26,7 +26,7 @@ class PasswordFormGroup extends HTMLElement {
             <input type="password" name="${name}" id="${id}" required>
             <span class="toggle-password" data-input="${id}">👁</span>
         </div>
-        `
+        `;
     }
 
     addEventListeners() {
@@ -36,7 +36,6 @@ class PasswordFormGroup extends HTMLElement {
         ['touchend', 'mouseup', 'mouseleave'].map(event => toggleElem.addEventListener(event, this.hidePassword.bind(this)));
 
     }
-
 
     showPassword(e: Event): void {
         const inputId = (e.currentTarget as HTMLElement).getAttribute('data-input');
@@ -52,7 +51,46 @@ class PasswordFormGroup extends HTMLElement {
     }
 
     getValue(): string {
-        return getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input').value
+        return getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input').value;
+    }
+}
+
+
+class OutputCard extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+    }
+
+    connectedCallback(): void {
+        const targetId = getAttributeOrThrow(this, "target-id");
+        const targetElement = getElementOrThrow<FormGroup>(document, `#${targetId}`);
+        const targetInput = getElementOrThrow<HTMLInputElement>(targetElement.shadowRoot!, 'input');
+        const defaultValue = targetInput.value
+
+        targetInput.addEventListener('input', () => {
+            const output = getElementOrThrow<HTMLOutputElement>(this.shadowRoot!, 'output')
+            output.value = targetElement.getValue();
+        })
+        this.render(defaultValue);
+
+    }
+
+    render(defaultValue: string): void {
+
+        this.shadowRoot!.innerHTML = `
+        <style>
+            output {
+                margin: 0;                
+                padding: 0.5vw;
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 1vw;
+            }
+        </style>
+    
+            <output>${defaultValue}</style>
+        `
     }
 }
 
@@ -67,10 +105,14 @@ class FormGroup extends HTMLElement {
     }
 
     render() {
-        const name = this.getAttribute('name') || ''
-        const input_type = this.getAttribute('type') || ''
-        const id = 'input-' + this.getAttribute('id') || ''
-        const required = this.hasAttribute('required') ? "required" : ""
+        const name = getAttributeOrThrow(this, 'name');
+        const input_type = getAttributeOrThrow(this, 'type');
+        const id = this.getAttribute('id') ? 'input-' + this.getAttribute('id') : '';
+        const required = this.hasAttribute('required') ? "required" : "";
+
+        const min = getOptionalAttribute(this, 'min');
+        const max = getOptionalAttribute(this, 'max');
+        const value = getOptionalAttribute(this, 'value')
 
 
         this.shadowRoot!.innerHTML = `
@@ -79,9 +121,14 @@ class FormGroup extends HTMLElement {
         </style>
         <div class="form-group">
             <label for="${name}">${this.getAttribute('label')}</label>
-            <input type="${input_type}"name="${name}"id="${id}" ${required}>
+            <input type="${input_type}"name="${name}"id="${id}" ${min} ${max} ${value} ${required}>
         </div>
         `
+    }
+
+    getOptionalAttribute(name: string): string {
+        const value = this.getAttribute(name);
+        return value ? `${name}="${value}"` : ""
     }
 
     getValue(): string {
@@ -262,3 +309,4 @@ customElements.define('base-form', BaseForm);
 customElements.define('password-form-group', PasswordFormGroup);
 customElements.define('form-group', FormGroup);
 customElements.define('submit-group', SubmitFormGroup)
+customElements.define('output-card', OutputCard)

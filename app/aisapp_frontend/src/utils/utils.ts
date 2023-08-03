@@ -1,7 +1,8 @@
 export const getElementOrThrow = <T extends Element>(source: Document | ShadowRoot, selector: string): T => {
     const element = source.querySelector<T>(selector);
     if (!element) {
-        throw new Error(`Element with selector "${selector}" was not found in the light DOM.`);
+        const querySource = source instanceof Document ? "light DOM" : "Shadow Root"
+        throw new Error(`Required element with selector "${selector}" was not found in ${querySource}.`);
     }
     return element;
 }
@@ -9,7 +10,13 @@ export const getElementOrThrow = <T extends Element>(source: Document | ShadowRo
 export const getAttributeOrThrow = (source: Element, attributeName: string): string => {
     const attribute = source.getAttribute(attributeName);
     if (!attribute) {
-        throw new Error(`attribute with selector "${attributeName}" was not found!`);
+        const querySource = source instanceof Document ? "light DOM" : "Shadow Root"
+        throw new Error(`Required attribute with selector "${attributeName}" was not found in ${querySource}`);
     }
     return attribute;
+}
+
+export const getOptionalAttribute = (source: HTMLElement, name: string): string => {
+    const value = source.getAttribute(name);
+    return value ? `${name}="${value}"` : ""
 }
