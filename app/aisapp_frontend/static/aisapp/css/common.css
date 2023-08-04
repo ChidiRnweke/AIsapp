@@ -1,11 +1,11 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-image: url("blue-1634110_1920.png");
-    background-size: cover;
+    background: linear-gradient(145deg, #004f59, #1e293b, #0b3d91);
     color: #ffffff;
     line-height: 2;
     margin: 0;
     padding: 0;
+
 }
 
 main {
@@ -17,21 +17,37 @@ main {
 }
 
 header {
+    border-radius: 8px;
+    margin: 1vw 0;
+    padding: 10px;
     text-align: center;
-    padding: 1.5vw 0;
 }
-
 
 header h1 {
     color: #ffffff;
     margin: 0;
-    font-size: 2.8em;
+    font-size: 3.2em;
+    font-weight: bold;
+    animation: fadeInDown 1s ease-out forwards;
 }
 
 header p {
     font-size: medium;
-    color: rgb(147, 191, 253);
+    color: #B0D0FF;
 }
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 footer {
     background: rgba(46, 61, 80, 0.4);
@@ -48,8 +64,24 @@ header button:hover {
 
 }
 
+
+h4 {
+    text-align: center;
+}
+
+fieldset {
+    border: none;
+    margin: 0 2% 1vw 0;
+}
+
 .slider {
     display: flex;
     align-items: center;
-    gap: 2vw;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+
+output-card {
+    display: block;
 }

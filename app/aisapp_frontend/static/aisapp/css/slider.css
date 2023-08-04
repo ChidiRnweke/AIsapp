@@ -23,6 +23,8 @@
 #next:hover {
     background-color: rgba(69, 178, 233, 1);
     transform: scale(1.02);
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
 #previous:disabled,
@@ -34,5 +36,14 @@
 .navigation-buttons {
     display: flex;
     margin-top: 2vw;
-    justify-content: right;
+    justify-content: center;
+
+}
+
+#next:active {
+    transform: translateX(5px);
+}
+
+#previous:active {
+    transform: translateX(-5px);
 }

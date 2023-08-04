@@ -1,22 +1,28 @@
 form {
-    width: 30vw;
-    max-width: 30vw;
+    display: grid;
     background: rgba(0, 0, 0, 0.4);
     border-radius: 5%;
-    padding: 1vw 3vw;
+    padding: 1vw 1vw;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
 }
 
 label {
-    margin: 1vw 1.25vw;
-    display: block;
+    position: relative;
+    display: inline-block;
+    margin: auto 2vw;
+    width: 8vw;
+    grid-column: 1;
 
 }
 
 input {
-    width: 50%;
+    grid-column: 2;
+    max-height: 0.5vw;
+    min-width: 5vw;
+    max-width: 10vw;
     padding: 0.5vw;
-    margin: 1vw 1.25vw;
+    margin: 0.25vw 1vw;
     border: 1px solid rgba(255, 255, 255, 0.5);
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
@@ -35,11 +41,10 @@ button {
     color: white;
     border: none;
     border-radius: 10%;
-    padding: 0.8vw;
+    padding: 0.5vw;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
-    display: block;
-    margin: 1vw auto;
+    margin: 2vw auto auto auto;
 }
 
 button:hover {
@@ -47,22 +52,16 @@ button:hover {
     transform: scale(1.02);
 }
 
-.password-field {
-    position: relative;
-    width: 100%;
-    margin-bottom: 1.25vw;
-    display: inline-block;
-}
-
 .toggle-password {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 1.5vw;
     position: absolute;
-    top: 50%;
-    right: 2vw;
+    right: 1.4vw;
+    top: 48%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: rgba(69, 178, 233, 0.8);
-    font-size: 1.5vw;
-    z-index: 1;
+    background: transparent;
+    border: none;
 }
 
 .toggle-password:hover {
@@ -70,10 +69,8 @@ button:hover {
 }
 
 .form-group {
-    position: relative;
-    width: 100%;
     display: flex;
-    justify-content: right;
+    position: relative;
 }
 
 
