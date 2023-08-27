@@ -17,7 +17,7 @@ class AppCard extends HTMLElement {
 
             <article class="card ${reversed ? 'reverse' : ''}">
                 <section class="text-content">
-                <h2 class="card-title"><slot name="title"></slot></h2>
+                    <slot name="title"></slot>
                     <slot name="text"></slot>
                 </section>
                 <img src="${this.getAttribute('img-src')}" alt="${this.getAttribute('img-alt')}">
