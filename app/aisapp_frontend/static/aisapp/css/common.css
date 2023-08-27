@@ -1,40 +1,35 @@
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(145deg, #004f59, #1e293b, #0b3d91);
-    color: #ffffff;
-    line-height: 2;
-    margin: 0;
-    padding: 0;
+    background-color: #030C11;
+    color: white;
 
 }
 
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 50vh;
-    padding: 1vw;
-}
 
 header {
-    border-radius: 8px;
     margin: 1vw 0;
-    padding: 10px;
+    padding: 0.7rem;
     text-align: center;
 }
 
 header h1 {
-    color: #ffffff;
     margin: 0;
-    font-size: 3.2em;
+    font-size: 3.2rem;
     font-weight: bold;
     animation: fadeInDown 1s ease-out forwards;
 }
 
 header p {
-    font-size: medium;
-    color: #B0D0FF;
+    color: #2892D7;
 }
+
+main {
+    margin-top: 5rem;
+    margin-left: clamp(0%, 12.5%, 25%);
+    margin-right: clamp(0%, 12.5%, 25%);
+    margin-bottom: 0;
+}
+
 
 @keyframes fadeInDown {
     from {
@@ -50,12 +45,11 @@ header p {
 
 
 footer {
-    background: rgba(46, 61, 80, 0.4);
     color: #ffffff;
     text-align: center;
-    padding: 30px 0;
-    width: 100%;
-    bottom: 0;
+    margin-top: 2rem;
+    padding: 0.5rem;
+    background-color: #061923;
 }
 
 
@@ -63,7 +57,6 @@ header button:hover {
     transform: scale(1.02);
 
 }
-
 
 h4 {
     text-align: center;
@@ -79,9 +72,4 @@ fieldset {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
-}
-
-
-output-card {
-    display: block;
 }
