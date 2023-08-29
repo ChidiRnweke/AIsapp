@@ -134,66 +134,70 @@
         <sequential-slider data-validator="basic">
             <article>
                 <base-form action-type="login">
-                    <section class="slider-output-container">
-                        <h4>How much time do you generally have on week days?</h4>
-                        <div class="slider">
-                            <form-group label="Available time (hours)" name="week-time" type="range" id="week-time"
-                                min="0" max="12" value="2"></form-group>
-                            <output-card target-id="week-time"></output-card>
-                        </div>
-                    </section>
-                    <section class="slider-output-container">
-                        <h4>How much time do you generally have during the weekend?</h4>
-                        <div class="slider">
-                            <form-group label="Available time (hours)" name="weekend-time" type="range"
-                                id="weekend-time" min="0" max="12" value="4"></form-group>
-                            <output-card target-id="weekend-time"></output-card>
-                        </div>
-                    </section>
+                    <form name="form">
+                        <section class="slider-output-container">
+                            <h4>How much time do you generally have on week days?</h4>
+                            <div class="slider">
+                                <form-group label="Available time (hours)" name="week-time" type="range" id="week-time"
+                                    min="0" max="12" value="2"></form-group>
+                                <output-card target-id="week-time"></output-card>
+                            </div>
+                        </section>
+                        <section class="slider-output-container">
+                            <h4>How much time do you generally have during the weekend?</h4>
+                            <div class="slider">
+                                <form-group label="Available time (hours)" name="weekend-time" type="range"
+                                    id="weekend-time" min="0" max="12" value="4"></form-group>
+                                <output-card target-id="weekend-time"></output-card>
+                            </div>
+                        </section>
+                    </form>
                 </base-form>
             </article>
             <article>
                 <base-form action-type="login">
-                    <h4>Do you want to refine your choices?</h4>
-                    <fieldset id="weekday-fields">
-                        <div class="slider">
-                            <form-group label="Monday" name="monday" type="range" id="monday" min="0" max="12"
-                                value="4"></form-group>
-                            <output-card target-id="monday"></output-card>
-                        </div>
-                        <div class="slider">
-                            <form-group label="Tuesday" name="tuesday" type="range" id="tuesday" min="0" max="12"
-                                value="4"></form-group>
-                            <output-card target-id="tuesday"></output-card>
-                        </div>
-                        <div class="slider">
-                            <form-group label="Wednesday" name="wednesday" type="range" id="wednesday" min="0" max="12"
-                                value="4"></form-group>
-                            <output-card target-id="wednesday"></output-card>
-                        </div>
-                        <div class="slider">
-                            <form-group label="Thursday" name="thursday" type="range" id="thursday" min="0" max="12"
-                                value="4"></form-group>
-                            <output-card target-id="thursday"></output-card>
-                        </div>
-                        <div class="slider">
-                            <form-group label="Friday" name="friday" type="range" id="friday" min="0" max="12"
-                                value="4"></form-group>
-                            <output-card target-id="friday"></output-card>
-                        </div>
-                    </fieldset>
-                    <fieldset id="weekend-fields">
-                        <div class="slider">
-                            <form-group label="Saturday" name="saturday" type="range" id="saturday" min="0" max="12"
-                                value="4"></form-group>
-                            <output-card target-id="saturday"></output-card>
-                        </div>
-                        <div class="slider">
-                            <form-group label="Sunday" name="sunday" type="range" id="sunday" min="0" max="12"
-                                value="4"></form-group>
-                            <output-card target-id="sunday"></output-card>
-                        </div>
-                    </fieldset>
+                    <form name="form">
+                        <h4>Do you want to refine your choices?</h4>
+                        <fieldset id="weekday-fields">
+                            <div class="slider">
+                                <form-group label="Monday" name="monday" type="range" id="monday" min="0" max="12"
+                                    value="4"></form-group>
+                                <output-card target-id="monday"></output-card>
+                            </div>
+                            <div class="slider">
+                                <form-group label="Tuesday" name="tuesday" type="range" id="tuesday" min="0" max="12"
+                                    value="4"></form-group>
+                                <output-card target-id="tuesday"></output-card>
+                            </div>
+                            <div class="slider">
+                                <form-group label="Wednesday" name="wednesday" type="range" id="wednesday" min="0"
+                                    max="12" value="4"></form-group>
+                                <output-card target-id="wednesday"></output-card>
+                            </div>
+                            <div class="slider">
+                                <form-group label="Thursday" name="thursday" type="range" id="thursday" min="0" max="12"
+                                    value="4"></form-group>
+                                <output-card target-id="thursday"></output-card>
+                            </div>
+                            <div class="slider">
+                                <form-group label="Friday" name="friday" type="range" id="friday" min="0" max="12"
+                                    value="4"></form-group>
+                                <output-card target-id="friday"></output-card>
+                            </div>
+                        </fieldset>
+                        <fieldset id="weekend-fields">
+                            <div class="slider">
+                                <form-group label="Saturday" name="saturday" type="range" id="saturday" min="0" max="12"
+                                    value="4"></form-group>
+                                <output-card target-id="saturday"></output-card>
+                            </div>
+                            <div class="slider">
+                                <form-group label="Sunday" name="sunday" type="range" id="sunday" min="0" max="12"
+                                    value="4"></form-group>
+                                <output-card target-id="sunday"></output-card>
+                            </div>
+                        </fieldset>
+                    </form>
                 </base-form>
             </article>
         </sequential-slider>
