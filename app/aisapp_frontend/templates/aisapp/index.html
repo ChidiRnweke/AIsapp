@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{% static 'aisapp/css/404.css' %}">
     <link rel="stylesheet" href="{% static 'aisapp/css/home.css' %}">
 
-    <script src="{% static 'aisapp/dist/components/appCard.js' %}"></script>
+    <script type="module" src="{% static 'aisapp/dist/components/appCard.js' %}"></script>
     <script type="module" src="{% static 'aisapp/dist/components/sequentialSlider.js' %}"></script>
 
     <script type=module src="{% static 'aisapp/dist/components/formComponents.js' %}"></script>
@@ -100,8 +100,8 @@
                     aria-required="true"></password-form-group>
                 <password-form-group label="Confirm Password" name="password2" id="password2"
                     aria-required="true"></password-form-group>
-                <submit-group slot="submit-group" label="register"></submit-group>
             </fieldset>
+            <submit-group slot="submit-group" label="register"></submit-group>
         </base-form>
     </main>
 </template>
