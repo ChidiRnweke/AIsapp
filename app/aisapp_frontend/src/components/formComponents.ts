@@ -355,7 +355,7 @@ class BaseForm extends HTMLElement {
 
     private attachEventListeners(): void {
         const form = getElementOrThrow<HTMLFormElement>(this.shadowRoot!, `#${this.actionType}-form`);
-        form.addEventListener('submit', async (e: Event) => {
+        form.addEventListener('submit', (e: Event) => {
             e.preventDefault();
             console.log("submit");
             if (this.formHandler.ExtraValidation()) {
