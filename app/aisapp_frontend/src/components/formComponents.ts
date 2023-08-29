@@ -318,7 +318,7 @@ class BaseForm extends HTMLElement {
             <style>
                 @import url('static/aisapp/css/forms.css');
             </style>
-                <slot name="form" id="${this.actionType}-form">
+                <slot name="form">
                     <slot></slot>
                     <slot name=submit-group></slot>
                     <div id="error-message"></div>
@@ -327,16 +327,15 @@ class BaseForm extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ["actionType"];
+        return ["action-type"];
     }
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-        const form = getElementOrThrow<HTMLFormElement>(this.shadowRoot!, 'form');
-
+        const form = getElementOrThrow<HTMLFormElement>(this.shadowRoot!, 'slot[name=form]');
 
         switch (name) {
 
-            case 'id':
+            case 'action-type':
                 this.actionType = newValue;
                 form.id = `${newValue}-form`;
                 break;
