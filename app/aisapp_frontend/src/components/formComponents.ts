@@ -9,17 +9,22 @@ class PasswordFormGroup extends HTMLElement {
         super()
         this.attachShadow({ mode: 'open' });
         this.render();
-
         this.internals = this.attachInternals();
-        const input = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input');
-        input.addEventListener('change', () => {
-            this.internals.setFormValue(input.value);
-        })
-
     }
 
     connectedCallback() {
-        this.addEventListeners();
+        const input = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input');
+
+        this.internals.setValidity(input.validity, input.validationMessage, input);
+        input.addEventListener('change', () => {
+            this.internals.setFormValue(input.value);
+            this.internals.setValidity(input.validity, input.validationMessage, input);
+        });
+
+        const toggleElem = getElementOrThrow<HTMLElement>(this.shadowRoot!, '.toggle-password');
+        ['mousedown', 'touchstart'].map(event => toggleElem.addEventListener(event, this.showPassword.bind(this)));
+        ['touchend', 'mouseup', 'mouseleave'].map(event => toggleElem.addEventListener(event, this.hidePassword.bind(this)));
+
     }
 
     render() {
@@ -63,14 +68,6 @@ class PasswordFormGroup extends HTMLElement {
         }
     }
 
-    addEventListeners() {
-        const toggleElem = getElementOrThrow<HTMLElement>(this.shadowRoot!, '.toggle-password');
-
-        ['mousedown', 'touchstart'].map(event => toggleElem.addEventListener(event, this.showPassword.bind(this)));
-        ['touchend', 'mouseup', 'mouseleave'].map(event => toggleElem.addEventListener(event, this.hidePassword.bind(this)));
-
-    }
-
     showPassword(e: Event): void {
         const inputId = (e.currentTarget as HTMLElement).getAttribute('data-input');
         const inputElem = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, `#${inputId}`);
@@ -84,7 +81,23 @@ class PasswordFormGroup extends HTMLElement {
         inputElem.type = 'password';
     }
 
-    getValue(): string {
+    checkValidity(): boolean {
+        return this.internals.checkValidity();
+    }
+
+    reportValidity(): boolean {
+        return this.internals.reportValidity();
+    }
+
+    get validity(): ValidityState {
+        return this.internals.validity;
+    }
+
+    get validationMessage(): string {
+        return this.internals.validationMessage;
+    }
+
+    getInputValue(): string {
         return getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input').value;
     }
 }
@@ -130,22 +143,26 @@ class OutputCard extends HTMLElement {
 
 class FormGroup extends HTMLElement {
     static formAssociated = true;
-    internals: ElementInternals;
+    private internals: ElementInternals;
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         this.render();
 
         this.internals = this.attachInternals();
-        const input = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input');
-        input.addEventListener('change', () => {
-            this.internals.setFormValue(input.value);
-        })
-
-
     }
 
-    render() {
+    connectedCallback() {
+        const input = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input');
+        this.internals.setValidity(input.validity, input.validationMessage, input);
+
+        input.addEventListener('change', () => {
+            this.internals.setFormValue(input.value);
+            this.internals.setValidity(input.validity, input.validationMessage, input);
+        });
+    }
+
+    private render() {
         this.shadowRoot!.innerHTML = /*html*/`
         <style>
             @import url('static/aisapp/css/forms.css');
@@ -176,11 +193,15 @@ class FormGroup extends HTMLElement {
                 break;
 
             case "type":
-                input.type = "type";
+                input.type = newValue;
                 break;
 
             case 'label':
                 label.textContent = newValue;
+                break;
+
+            case 'required':
+                input.toggleAttribute("required");
                 break;
 
             default:
@@ -190,6 +211,22 @@ class FormGroup extends HTMLElement {
         }
     }
 
+    checkValidity(): boolean {
+        return this.internals.checkValidity();
+    }
+
+    reportValidity(): boolean {
+        return this.internals.reportValidity();
+    }
+
+    get validity(): ValidityState {
+        return this.internals.validity;
+    }
+
+    get validationMessage(): string {
+        return this.internals.validationMessage;
+    }
+
     getInputValue(): string {
         return getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input').value
     }
@@ -197,101 +234,61 @@ class FormGroup extends HTMLElement {
 
 
 class SubmitFormGroup extends HTMLElement {
+    static formAssociated = true;
+    private internals: ElementInternals;
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        this.internals = this.attachInternals();
+        this.render();
+
     }
 
     connectedCallback() {
-        this.render();
-        this.attachEventListeners();
-    }
+        const form = this.internals.form;
 
-    attachEventListeners() {
-        const button = getElementOrThrow<HTMLButtonElement>(this.shadowRoot!, 'button[type="submit"]');
-        button.addEventListener('click', this.handleSubmit.bind(this));
+        if (!form) {
+            throw new Error("No form is associated with this element.")
+        }
 
+        const button = getElementOrThrow<HTMLButtonElement>(this.shadowRoot!, "button");
+        button.addEventListener("click", (e) => {
+            e.preventDefault();
+            form.requestSubmit();
+        });
     }
 
     render() {
-        const label = this.getAttribute('label') || ''
-        const id = this.getAttribute('id') || ''
-
         this.shadowRoot!.innerHTML = /*html*/`
         <style>
             @import url('static/aisapp/css/forms.css');
         </style>
         <div class="form-group">
-            <button type="submit" id = "${id}">${label}</button>
+            <button type="submit"></button>
         </div>
         `
     }
 
-    handleSubmit(e: Event): void {
-        e.preventDefault();
+    static get observedAttributes() {
+        return ["label", "id"];
+    }
 
-        const baseForm = this.getBaseForm();
-        const form = getElementOrThrow<HTMLFormElement>(baseForm.shadowRoot!, 'form');
+    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+        const button = getElementOrThrow<HTMLButtonElement>(this.shadowRoot!, 'button');
 
-        this.clearPreviousFeedback(baseForm);
+        switch (name) {
 
-        if (baseForm.checkValidity()) {
-            form.dispatchEvent(new Event('submit'));
-        } else {
-            this.highlightInvalidFields(baseForm);
+            case 'id':
+                button.id = newValue;
+                break;
+
+            case 'label':
+                button.textContent = newValue;
+                break;
+
         }
     }
 
-    getBaseForm(): BaseForm {
-        const baseForm = this.closest<BaseForm>('base-form');
-        if (!baseForm) {
-            throw new Error("No base-form element available.");
-        }
-        return baseForm
-    }
-
-    clearPreviousFeedback(baseForm: BaseForm): void {
-        const allInputs = this.getAllInputComponents(baseForm);
-        allInputs.forEach(inputComponent => {
-            this.removeErrorStyles(inputComponent);
-        });
-    }
-
-    getAllInputComponents(baseForm: BaseForm): Element[] {
-        return Array.from(baseForm.querySelectorAll('form-group, password-form-group'));
-    }
-
-    removeErrorStyles(inputComponent: Element): void {
-        const innerInput = getElementOrThrow(inputComponent.shadowRoot!, 'input');
-        innerInput.classList.remove('invalid-input');
-        this.removeFeedbackMessage(inputComponent);
-
-    }
-
-    removeFeedbackMessage(inputComponent: Element): void {
-        const feedback = inputComponent.shadowRoot!.querySelector('.invalid-feedback');
-        if (feedback) {
-            feedback.remove();
-        }
-    }
-
-    highlightInvalidFields(baseForm: BaseForm): void {
-        const allInputs = this.getAllInputComponents(baseForm);
-        allInputs.forEach(inputComponent => {
-            const innerInput = getElementOrThrow<HTMLInputElement>(inputComponent.shadowRoot!, 'input');
-            if (!innerInput.checkValidity()) {
-                innerInput.classList.add('invalid-input');
-                this.addFeedbackMessage(inputComponent, innerInput.validationMessage);
-            }
-        });
-    }
-
-    addFeedbackMessage(inputComponent: Element, message: string): void {
-        const errorMessage = document.createElement('div');
-        errorMessage.classList.add('invalid-feedback');
-        errorMessage.textContent = message;
-        inputComponent.shadowRoot!.appendChild(errorMessage);
-    }
 }
 
 class BaseForm extends HTMLElement {
@@ -317,11 +314,11 @@ class BaseForm extends HTMLElement {
             <style>
                 @import url('static/aisapp/css/forms.css');
             </style>
-                <form id="${this.actionType}-form">
+                <slot name="form" id="${this.actionType}-form">
                     <slot></slot>
                     <slot name=submit-group></slot>
                     <div id="error-message"></div>
-                </form>
+                </slot>
         `;
     }
 
@@ -339,25 +336,15 @@ class BaseForm extends HTMLElement {
         const form = getElementOrThrow<HTMLFormElement>(this.shadowRoot!, `#${this.actionType}-form`);
         form.addEventListener('submit', async (e: Event) => {
             e.preventDefault();
-
+            console.log("submit");
             if (this.formHandler.ExtraValidation()) {
-                console.log(this.formHandler.ExtraValidation())
                 this.formHandler.post()
             }
             else {
-                this.displayError("The passwords did not match.");
-
+                this.displayError(this.formHandler.errorMessage);
             }
-        })
-    }
 
-    checkValidity(): boolean {
-        const allInputs = Array.from(this.querySelectorAll('form-group, password-form-group'));
-        const allValid = allInputs.every(input => {
-            const innerInput = getElementOrThrow<HTMLInputElement>(input.shadowRoot!, 'input');
-            return innerInput && innerInput.checkValidity();
-        });
-        return allValid
+        })
     }
 
 }

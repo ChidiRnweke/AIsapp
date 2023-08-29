@@ -1,4 +1,4 @@
-form {
+::slotted(form) {
     display: grid;
     background: #061923;
     border-radius: 10px;

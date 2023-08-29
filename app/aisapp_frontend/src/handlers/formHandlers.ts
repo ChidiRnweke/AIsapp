@@ -9,20 +9,23 @@ interface CustomFormInterface extends HTMLElement {
 }
 
 interface FormGroupInterface extends HTMLElement {
-    getValue(): string;
+    getInputValue(): string;
 
 }
 
 export interface FormHandler {
     ExtraValidation(): boolean;
     post(): void;
+    errorMessage: string;
 }
 
 
 export class LoginHandler implements FormHandler {
     form: CustomFormInterface;
+    errorMessage: string;
     constructor(form: CustomFormInterface) {
         this.form = form;
+        this.errorMessage = "The passwords did not match";
     }
 
     ExtraValidation(): boolean {
@@ -30,8 +33,8 @@ export class LoginHandler implements FormHandler {
     }
 
     async post(): Promise<void> {
-        const username = getElementOrThrow<FormGroupInterface>(document, '#username').getValue();
-        const password = getElementOrThrow<FormGroupInterface>(document, '#password').getValue();
+        const username = getElementOrThrow<FormGroupInterface>(document, '#username').getInputValue();
+        const password = getElementOrThrow<FormGroupInterface>(document, '#password').getInputValue();
 
         try {
 
@@ -57,28 +60,32 @@ export class LoginHandler implements FormHandler {
             console.error("Error while registering:", error);
             this.form.displayError("There was a problem registering. Please try again later.");
         }
+
+
     };
 }
 
 
 export class RegistrationHandler implements FormHandler {
+    errorMessage: string;
     form: CustomFormInterface;
     constructor(form: CustomFormInterface) {
         this.form = form;
+        this.errorMessage = "The passwords did not match";
     }
 
     ExtraValidation(): boolean {
         const passwordElem = getElementOrThrow<FormGroupInterface>(document, '#password');
         const password2Elem = getElementOrThrow<FormGroupInterface>(document, '#password2');
-        return passwordElem.getValue() === password2Elem.getValue();
+        return passwordElem.getInputValue() === password2Elem.getInputValue();
     }
 
     async post(): Promise<void> {
-        const username = getElementOrThrow<FormGroupInterface>(document, '#username').getValue();
-        const firstName = getElementOrThrow<FormGroupInterface>(document, '#first-name').getValue();
-        const lastName = getElementOrThrow<FormGroupInterface>(document, '#last-name').getValue();
-        const email = getElementOrThrow<FormGroupInterface>(document, '#email').getValue();
-        const password = getElementOrThrow<FormGroupInterface>(document, '#password').getValue();
+        const username = getElementOrThrow<FormGroupInterface>(document, '#username').getInputValue();
+        const firstName = getElementOrThrow<FormGroupInterface>(document, '#first-name').getInputValue();
+        const lastName = getElementOrThrow<FormGroupInterface>(document, '#last-name').getInputValue();
+        const email = getElementOrThrow<FormGroupInterface>(document, '#email').getInputValue();
+        const password = getElementOrThrow<FormGroupInterface>(document, '#password').getInputValue();
 
         try {
 

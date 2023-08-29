@@ -87,21 +87,23 @@
     </header>
     <main id="main-register">
         <base-form action-type="register">
-            <fieldset>
-                <form-group label="Username" name="username" type="text" id="username" required></form-group>
-                <form-group label="Email" name="email" type="email" id="email" required></form-group>
-            </fieldset>
-            <fieldset>
-                <form-group label="First Name" name="first-name" type="text" id="first-name" required></form-group>
-                <form-group label="Last Name" name="last-name" type="text" id="last-name" required></form-group>
-            </fieldset>
-            <fieldset>
-                <password-form-group label="Password" name="password" id="password"
-                    aria-required="true"></password-form-group>
-                <password-form-group label="Confirm Password" name="password2" id="password2"
-                    aria-required="true"></password-form-group>
-            </fieldset>
-            <submit-group slot="submit-group" label="register"></submit-group>
+            <form name="form">
+                <fieldset>
+                    <form-group label="Username" name="username" type="text" id="username" required></form-group>
+                    <form-group label="Email" name="email" type="email" id="email" required></form-group>
+                </fieldset>
+                <fieldset>
+                    <form-group label="First Name" name="first-name" type="text" id="first-name" required></form-group>
+                    <form-group label="Last Name" name="last-name" type="text" id="last-name" required></form-group>
+                </fieldset>
+                <fieldset>
+                    <password-form-group label="Password" name="password" id="password"
+                        aria-required="true"></password-form-group>
+                    <password-form-group label="Confirm Password" name="password2" id="password2"
+                        aria-required="true"></password-form-group>
+                </fieldset>
+                <submit-group slot="submit-group" label="register"></submit-group>
+            </form>
         </base-form>
     </main>
 </template>
@@ -113,10 +115,12 @@
     </header>
     <main id="main-login">
         <base-form action-type="login">
-            <form-group label="Username" name="username" type="text" id="username"></form-group>
-            <password-form-group label="Password" name="password" id="password"
-                aria-required="true"></password-form-group>
-            <submit-group slot="submit-group" label="login"></submit-group>
+            <form name="form">
+                <form-group label="Username" name="username" type="text" id="username" required></form-group>
+                <password-form-group label="Password" name="password" id="password"
+                    aria-required="true"></password-form-group>
+                <submit-group slot="submit-group" label="login"></submit-group>
+            </form>
         </base-form>
     </main>
 </template>
