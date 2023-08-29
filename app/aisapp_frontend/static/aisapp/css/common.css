@@ -1,7 +1,17 @@
+:root {
+    --text: #ffffff;
+    --cards: rgba(255, 255, 255, 0.03);
+    --background: #030C11;
+    --primary: #8fb3ff;
+    --secondary: #001952;
+    --accent: #f199bf;
+}
+
+
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #030C11;
-    color: white;
+    background-color: var(--background);
+    color: var(--text);
 
 }
 
@@ -20,16 +30,24 @@ header h1 {
 }
 
 header p {
-    color: #2892D7;
+    color: var(--primary);
 }
+
+
 
 main {
     margin-top: 5rem;
     margin-left: clamp(0%, 12.5%, 25%);
     margin-right: clamp(0%, 12.5%, 25%);
     margin-bottom: 0;
+    display: grid;
+    align-items: center;
+    justify-content: center;
 }
 
+#main-home {
+    gap: 3rem;
+}
 
 @keyframes fadeInDown {
     from {
@@ -48,7 +66,7 @@ footer {
     color: #ffffff;
     text-align: center;
     margin-top: 2rem;
-    padding: 0.5rem;
+    padding: 1rem;
     background-color: #061923;
 }
 
