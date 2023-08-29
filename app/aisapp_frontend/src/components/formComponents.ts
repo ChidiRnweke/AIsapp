@@ -157,7 +157,7 @@ class FormGroup extends HTMLElement {
         `
     }
     static get observedAttributes() {
-        return ["name", "type", "id", "min", "max", "value", "required"];
+        return ["name", "label", "type", "id", "min", "max", "value", "required"];
     }
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
