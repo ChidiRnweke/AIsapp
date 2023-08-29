@@ -4,29 +4,54 @@ import { getElementOrThrow, getAttributeOrThrow, getOptionalAttribute } from "..
 
 class PasswordFormGroup extends HTMLElement {
     constructor() {
-        super();
+        super()
         this.attachShadow({ mode: 'open' });
+        this.render();
     }
 
     connectedCallback() {
-        this.render();
         this.addEventListeners();
     }
 
     render() {
-        const name = getAttributeOrThrow(this, 'name');
-        const id = this.getAttribute('id') || '';
-
-        this.shadowRoot!.innerHTML = `
+        this.shadowRoot!.innerHTML = /*html*/`
         <style>
             @import url('static/aisapp/css/forms.css');
         </style>
         <div class="form-group">
-            <label for="${name}">${this.getAttribute('label')}</label>
-            <input type="password" name="${name}" id="${id}" required>
-            <span class="toggle-password" data-input="${id}">👁</span>
+            <label></label>
+            <input type="password" required>
+            <span class="toggle-password">👁</span>
         </div>
         `;
+    }
+
+    static get observedAttributes() {
+        return ["label", "name", "id"];
+    }
+
+    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+        const input = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input');
+        const label = getElementOrThrow<HTMLLabelElement>(this.shadowRoot!, 'label');
+        const togglePassword = getElementOrThrow<HTMLSpanElement>(this.shadowRoot!, 'span');
+
+        switch (name) {
+
+            case 'name':
+                label.htmlFor = newValue;
+                input.name = newValue;
+                break;
+
+            case 'id':
+                input.id = newValue;
+                togglePassword.setAttribute("data-input", newValue);
+                break;
+
+            case 'label':
+                label.textContent = newValue;
+                break;
+
+        }
     }
 
     addEventListeners() {
@@ -78,7 +103,7 @@ class OutputCard extends HTMLElement {
 
     render(defaultValue: string): void {
 
-        this.shadowRoot!.innerHTML = `
+        this.shadowRoot!.innerHTML = /*html*/`
         <style>
             output {
                 margin: 0;                
@@ -115,7 +140,7 @@ class FormGroup extends HTMLElement {
         const value = getOptionalAttribute(this, 'value')
 
 
-        this.shadowRoot!.innerHTML = `
+        this.shadowRoot!.innerHTML = /*html*/`
         <style>
             @import url('static/aisapp/css/forms.css');
         </style>
@@ -158,7 +183,7 @@ class SubmitFormGroup extends HTMLElement {
         const label = this.getAttribute('label') || ''
         const id = this.getAttribute('id') || ''
 
-        this.shadowRoot!.innerHTML = `
+        this.shadowRoot!.innerHTML = /*html*/`
         <style>
             @import url('static/aisapp/css/forms.css');
         </style>
@@ -254,7 +279,7 @@ class BaseForm extends HTMLElement {
     }
 
     render(): void {
-        this.shadowRoot!.innerHTML = `
+        this.shadowRoot!.innerHTML = /*html*/`
             <style>
                 @import url('static/aisapp/css/forms.css');
             </style>

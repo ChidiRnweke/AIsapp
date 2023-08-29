@@ -1,50 +1,56 @@
 form {
     display: grid;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 5%;
-    padding: 1vw 1vw;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #061923;
+    border-radius: 10px;
+    justify-content: center;
+    max-width: 25rem;
+    padding: 2rem;
+}
 
+.form-group {
+    display: grid;
+    grid-template-areas:
+        'label input';
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 label {
-    position: relative;
-    display: inline-block;
-    margin: auto 2vw;
-    width: 8vw;
-    grid-column: 1;
+    grid-area: label;
+    color: var(--primary);
+    margin-right: 0.75rem;
 
+}
+
+.toggle-password {
+    grid-area: input;
+    justify-self: right;
+    margin-right: 0.5rem;
 }
 
 input {
-    grid-column: 2;
-    max-height: 0.5vw;
-    min-width: 5vw;
-    max-width: 10vw;
-    padding: 0.5vw;
-    margin: 0.25vw 1vw;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border-radius: 1vw;
-    transition: background 0.3s, transform 0.3s;
+    grid-area: input;
+    border: 1px solid white;
+    background: #030C11;
+    color: white;
+    border-radius: 5px;
+    max-width: 10rem;
 }
 
-input:focus {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.02);
-    outline: none;
+.form-group:focus-within {
+    transform: scale(1.03);
 }
 
 button {
+    grid-column: span 2;
     background-color: rgba(69, 178, 233, 0.8);
     color: white;
     border: none;
     border-radius: 10%;
-    padding: 0.5vw;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    margin: 2vw auto auto auto;
+    padding: 0.5rem;
+    justify-self: center;
+    align-self: center;
 }
 
 button:hover {
@@ -52,27 +58,9 @@ button:hover {
     transform: scale(1.02);
 }
 
-.toggle-password {
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 1.5vw;
-    position: absolute;
-    right: 1.4vw;
-    top: 48%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    background: transparent;
-    border: none;
-}
-
 .toggle-password:hover {
     color: rgba(69, 178, 233, 1);
 }
-
-.form-group {
-    display: flex;
-    position: relative;
-}
-
 
 #error-message {
     color: rgb(255, 111, 0);
