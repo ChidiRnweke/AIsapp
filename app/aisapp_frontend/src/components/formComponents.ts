@@ -1,12 +1,21 @@
 
 import { FormHandler, getFormHandler } from "../handlers/formHandlers.js";
-import { getElementOrThrow, getAttributeOrThrow, getOptionalAttribute } from "../utils/utils.js";
+import { getElementOrThrow, getAttributeOrThrow } from "../utils/utils.js";
 
 class PasswordFormGroup extends HTMLElement {
+    static formAssociated = true;
+    internals: ElementInternals;
     constructor() {
         super()
         this.attachShadow({ mode: 'open' });
         this.render();
+
+        this.internals = this.attachInternals();
+        const input = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input');
+        input.addEventListener('change', () => {
+            this.internals.setFormValue(input.value);
+        })
+
     }
 
     connectedCallback() {
@@ -95,7 +104,7 @@ class OutputCard extends HTMLElement {
 
         targetInput.addEventListener('input', () => {
             const output = getElementOrThrow<HTMLOutputElement>(this.shadowRoot!, 'output')
-            output.value = targetElement.getValue();
+            output.value = targetElement.getInputValue();
         })
         this.render(defaultValue);
 
@@ -120,43 +129,68 @@ class OutputCard extends HTMLElement {
 }
 
 class FormGroup extends HTMLElement {
+    static formAssociated = true;
+    internals: ElementInternals;
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-    }
-
-    connectedCallback() {
         this.render();
+
+        this.internals = this.attachInternals();
+        const input = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input');
+        input.addEventListener('change', () => {
+            this.internals.setFormValue(input.value);
+        })
+
+
     }
 
     render() {
-        const name = getAttributeOrThrow(this, 'name');
-        const input_type = getAttributeOrThrow(this, 'type');
-        const id = this.getAttribute('id') ? 'input-' + this.getAttribute('id') : '';
-        const required = this.hasAttribute('required') ? "required" : "";
-
-        const min = getOptionalAttribute(this, 'min');
-        const max = getOptionalAttribute(this, 'max');
-        const value = getOptionalAttribute(this, 'value')
-
-
         this.shadowRoot!.innerHTML = /*html*/`
         <style>
             @import url('static/aisapp/css/forms.css');
         </style>
         <div class="form-group">
-            <label for="${name}">${this.getAttribute('label')}</label>
-            <input type="${input_type}"name="${name}"id="${id}" ${min} ${max} ${value} ${required}>
+            <label></label>
+            <input>
         </div>
         `
     }
-
-    getOptionalAttribute(name: string): string {
-        const value = this.getAttribute(name);
-        return value ? `${name}="${value}"` : ""
+    static get observedAttributes() {
+        return ["name", "type", "id", "min", "max", "value", "required"];
     }
 
-    getValue(): string {
+    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+        const input = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input');
+        const label = getElementOrThrow<HTMLLabelElement>(this.shadowRoot!, 'label');
+
+        switch (name) {
+
+            case 'name':
+                label.htmlFor = newValue;
+                input.name = newValue;
+                break;
+
+            case 'id':
+                input.id = newValue;
+                break;
+
+            case "type":
+                input.type = "type";
+                break;
+
+            case 'label':
+                label.textContent = newValue;
+                break;
+
+            default:
+                input.setAttribute(name, newValue);
+                break;
+
+        }
+    }
+
+    getInputValue(): string {
         return getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input').value
     }
 }
