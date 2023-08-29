@@ -27,7 +27,7 @@ class PasswordFormGroup extends HTMLElement {
 
     }
 
-    render() {
+    private render() {
         this.shadowRoot!.innerHTML = /*html*/`
         <style>
             @import url('static/aisapp/css/forms.css');
@@ -68,14 +68,14 @@ class PasswordFormGroup extends HTMLElement {
         }
     }
 
-    showPassword(e: Event): void {
+    private showPassword(e: Event): void {
         const inputId = (e.currentTarget as HTMLElement).getAttribute('data-input');
         const inputElem = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, `#${inputId}`);
         inputElem.type = 'text';
 
     }
 
-    hidePassword(e: Event): void {
+    private hidePassword(e: Event): void {
         const inputId = (e.currentTarget as HTMLElement).getAttribute('data-input');
         const inputElem = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, `#${inputId}`);
         inputElem.type = 'password';
@@ -123,7 +123,7 @@ class OutputCard extends HTMLElement {
 
     }
 
-    render(defaultValue: string): void {
+    private render(defaultValue: string): void {
 
         this.shadowRoot!.innerHTML = /*html*/`
         <style>
@@ -251,6 +251,10 @@ class SubmitFormGroup extends HTMLElement {
             throw new Error("No form is associated with this element.")
         }
 
+        this.attachEventListeners(form);
+    }
+
+    private attachEventListeners(form: HTMLFormElement) {
         const button = getElementOrThrow<HTMLButtonElement>(this.shadowRoot!, "button");
         button.addEventListener("click", (e) => {
             e.preventDefault();
@@ -258,7 +262,7 @@ class SubmitFormGroup extends HTMLElement {
         });
     }
 
-    render() {
+    private render() {
         this.shadowRoot!.innerHTML = /*html*/`
         <style>
             @import url('static/aisapp/css/forms.css');
@@ -292,24 +296,24 @@ class SubmitFormGroup extends HTMLElement {
 }
 
 class BaseForm extends HTMLElement {
-    actionType: string;
+    actionType!: string;
     errorMessageElem!: HTMLElement;
     formHandler!: FormHandler;
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.actionType = getAttributeOrThrow(this, "action-type");
+        this.render();
+        this.errorMessageElem = getElementOrThrow<HTMLElement>(this.shadowRoot!, '#error-message');
+
     }
 
     connectedCallback(): void {
-        this.render();
-        this.errorMessageElem = getElementOrThrow<HTMLElement>(this.shadowRoot!, '#error-message');
         this.formHandler = getFormHandler(this);
         this.attachEventListeners();
 
     }
 
-    render(): void {
+    private render(): void {
         this.shadowRoot!.innerHTML = /*html*/`
             <style>
                 @import url('static/aisapp/css/forms.css');
@@ -322,6 +326,23 @@ class BaseForm extends HTMLElement {
         `;
     }
 
+    static get observedAttributes() {
+        return ["actionType"];
+    }
+
+    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+        const form = getElementOrThrow<HTMLFormElement>(this.shadowRoot!, 'form');
+
+
+        switch (name) {
+
+            case 'id':
+                this.actionType = newValue;
+                form.id = `${newValue}-form`;
+                break;
+        }
+    }
+
     displayError(message: string, duration: number | null = null): void {
         this.errorMessageElem.textContent = message;
         if (duration) {
@@ -332,7 +353,7 @@ class BaseForm extends HTMLElement {
         }
     }
 
-    attachEventListeners(): void {
+    private attachEventListeners(): void {
         const form = getElementOrThrow<HTMLFormElement>(this.shadowRoot!, `#${this.actionType}-form`);
         form.addEventListener('submit', async (e: Event) => {
             e.preventDefault();

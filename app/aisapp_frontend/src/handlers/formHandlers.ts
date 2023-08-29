@@ -128,6 +128,8 @@ export const getFormHandler = (baseForm: CustomFormInterface): FormHandler => {
             return new LoginHandler(baseForm);
         case 'register':
             return new RegistrationHandler(baseForm);
+        case undefined:
+            throw new Error('No actionType was added to the form group.');
         default:
             throw new Error(`There is no handler available for actionType = ${baseForm.actionType}`)
     }
