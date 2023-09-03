@@ -1,9 +1,4 @@
-document.addEventListener('DOMContentLoaded', function (): void {
-
-    window.addEventListener('popstate', handleRouteChange);
-    handleRouteChange();
-
-});
+import { getElementOrThrow } from "./utils/utils.js";
 
 const handleRouteChange = (): void => {
     const route = window.location.pathname;
@@ -26,6 +21,15 @@ const handleRouteChange = (): void => {
             render404Page();
             break;
     }
+}
+
+const loadView = (templateId: string) => {
+    const mainContent = getElementOrThrow<HTMLDivElement>(document, '#main-content')!;
+    const template = getElementOrThrow<HTMLTemplateElement>(document, `#${templateId}`);
+    const clone = document.importNode(template.content, true);
+
+    mainContent.innerHTML = '';
+    mainContent.appendChild(clone);
 }
 
 const renderHomePage = (): void => {
@@ -66,18 +70,18 @@ const renderSetupPage = (): void => {
 }
 
 const render404Page = (): void => {
-    loadView('404');
-    document.addEventListener('click', () => {
+    loadView('page-not-found');
+
+    const homeButton = getElementOrThrow(document, "#back-home");
+    homeButton.addEventListener('click', () => {
         history.pushState({ page: "home" }, '', "/");
         handleRouteChange();
     });
 }
 
-const loadView = (templateId: string) => {
-    const mainContent = document.getElementById('main-content')!;
-    const template = (document.getElementById(templateId) as HTMLTemplateElement);
-    const clone = document.importNode(template.content, true);
+document.addEventListener('DOMContentLoaded', function (): void {
 
-    mainContent.innerHTML = '';
-    mainContent.appendChild(clone);
-}
+    window.addEventListener('popstate', handleRouteChange);
+    handleRouteChange();
+
+});

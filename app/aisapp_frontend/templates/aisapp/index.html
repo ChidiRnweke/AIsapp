@@ -14,9 +14,9 @@
     <script type="module" src="{% static 'aisapp/dist/components/appCard.js' %}"></script>
     <script type="module" src="{% static 'aisapp/dist/components/sequentialSlider.js' %}"></script>
 
-    <script type=module src="{% static 'aisapp/dist/components/formComponents.js' %}"></script>
+    <script type="module" src="{% static 'aisapp/dist/components/formComponents.js' %}"></script>
 
-    <script src="{% static 'aisapp/dist/main.js' %}"></script>
+    <script type="module" src="{% static 'aisapp/dist/main.js' %}"></script>
 
 
 </head>
@@ -72,7 +72,7 @@
 </template>
 
 
-<template id="404">
+<template id="page-not-found">
     <header>
         <h1>404 Not Found</h1>
         <p>Seems like the page you are looking for is missing.</p>
@@ -131,7 +131,7 @@
         <p>Let's set up a few things before you can really start.</p>
     </header>
     <main>
-        <sequential-slider data-validator="basic">
+        <sequential-slider id="" data-validator="basic">
             <article>
                 <base-form action-type="login">
                     <form name="form">
