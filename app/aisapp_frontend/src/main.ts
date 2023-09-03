@@ -21,12 +21,16 @@ const handleRouteChange = (newRoute: string, PageRoutes: routes): void => {
 };
 
 const render = (page: Page) => {
-    const mainContent = getElementOrThrow<HTMLDivElement>(document, '#main-content');
+    const body = getElementOrThrow<HTMLDivElement>(document, "body");
+    const footer = getElementOrThrow(document, "footer");
+
+
     const template = getElementOrThrow<HTMLTemplateElement>(document, `#${page.templateId}`);
     const clone = document.importNode(template.content, true);
 
-    mainContent.innerHTML = '';
-    mainContent.appendChild(clone);
+    body.innerHTML = '';
+    body.appendChild(clone);
+    body.appendChild(footer);
 
     page.onRender();
 };
