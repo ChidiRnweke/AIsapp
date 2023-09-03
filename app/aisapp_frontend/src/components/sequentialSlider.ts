@@ -41,6 +41,19 @@ class SequentialSlider extends HTMLElement {
 
     }
 
+    static get observedAttributes() {
+        return ["id"];
+    }
+
+    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+        switch (name) {
+
+            case 'id':
+                this.id = newValue;
+                break;
+        }
+    }
+
     addEventListeners(): void {
         getElementOrThrow<HTMLButtonElement>(this.shadowRoot!, '#next').addEventListener('click', () => this.showNext());
         getElementOrThrow<HTMLButtonElement>(this.shadowRoot!, '#previous').addEventListener('click', () => this.showPrevious());
