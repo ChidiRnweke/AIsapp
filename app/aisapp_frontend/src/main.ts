@@ -1,87 +1,49 @@
+import { Page, homePage, registerPage, setupPage, loginPage, notFoundPage } from './pages/index.js'
 import { getElementOrThrow } from "./utils/utils.js";
 
-const handleRouteChange = (): void => {
-    const route = window.location.pathname;
+type routes = { [key: string]: Page };
 
-    switch (route) {
-        case '/':
-        case '':
-            renderHomePage();
-            break;
-        case '/register':
-            renderRegisterPage();
-            break;
-        case '/login':
-            renderLoginPage();
-            break;
-        case '/setup':
-            renderSetupPage();
-            break;
-        default:
-            render404Page();
-            break;
+const PageRoute: routes = {
+    '/': homePage,
+    '/register': registerPage,
+    '/setup': setupPage,
+    '/login': loginPage,
+    '/not-found': notFoundPage,
+};
+
+const handleRouteChange = (newRoute: string, PageRoutes: routes): void => {
+
+    if (PageRoutes[newRoute]) {
+        render(PageRoutes[newRoute]);
+    } else {
+        render(PageRoutes['/not-found']);
     }
-}
+};
 
-const loadView = (templateId: string) => {
-    const mainContent = getElementOrThrow<HTMLDivElement>(document, '#main-content')!;
-    const template = getElementOrThrow<HTMLTemplateElement>(document, `#${templateId}`);
+const render = (page: Page) => {
+    const mainContent = getElementOrThrow<HTMLDivElement>(document, '#main-content');
+    const template = getElementOrThrow<HTMLTemplateElement>(document, `#${page.templateId}`);
     const clone = document.importNode(template.content, true);
 
     mainContent.innerHTML = '';
     mainContent.appendChild(clone);
-}
 
-const renderHomePage = (): void => {
-    loadView("home");
+    page.onRender();
+};
 
-    const loginButton = document.querySelector('#login-button')!;
-    const registerButton = document.querySelector('#register-button')!;
-
-    loginButton.addEventListener('click', () => {
-        history.pushState({ page: "login" }, '', "/login");
-        handleRouteChange();
-    });
-
-    registerButton.addEventListener('click', () => {
-        history.pushState({ page: "register" }, '', "/register");
-        handleRouteChange();
-    });
-}
-
-const renderRegisterPage = (): void => {
-    loadView("register");
-    document.addEventListener('registrationSuccessful', () => {
-        history.pushState({ page: "setup" }, '', "/setup");
-        handleRouteChange();
-    })
-}
-
-const renderLoginPage = (): void => {
-    loadView("login");
-    document.addEventListener('loginSuccessful', () => {
-        history.pushState({ page: "setup" }, '', "/setup");
-        handleRouteChange();
-    })
-}
-
-const renderSetupPage = (): void => {
-    loadView("setup");
-}
-
-const render404Page = (): void => {
-    loadView('page-not-found');
-
-    const homeButton = getElementOrThrow(document, "#back-home");
-    homeButton.addEventListener('click', () => {
-        history.pushState({ page: "home" }, '', "/");
-        handleRouteChange();
-    });
-}
+document.addEventListener('routeChanged', () => {
+    const route = window.location.pathname;
+    handleRouteChange(route, PageRoute);
+});
 
 document.addEventListener('DOMContentLoaded', function (): void {
 
-    window.addEventListener('popstate', handleRouteChange);
-    handleRouteChange();
+    window.addEventListener('popstate', () => {
+        const route = window.location.pathname;
+        handleRouteChange(route, PageRoute)
+    });
+
+    const route = window.location.pathname;
+    handleRouteChange(route, PageRoute);
 
 });
