@@ -6,6 +6,7 @@ class SequentialSlider extends HTMLElement {
     currentSlotIndex: number;
     validatorType: string;
     validator!: SlideHandler;
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -28,7 +29,7 @@ class SequentialSlider extends HTMLElement {
     }
 
     render(): void {
-        this.shadowRoot!.innerHTML = `
+        this.shadowRoot!.innerHTML = /*html*/`
         <style>
             @import url('static/aisapp/css/slider.css');
         </style>
@@ -39,19 +40,6 @@ class SequentialSlider extends HTMLElement {
         </div>
       `;
 
-    }
-
-    static get observedAttributes() {
-        return ["id"];
-    }
-
-    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-        switch (name) {
-
-            case 'id':
-                this.id = newValue;
-                break;
-        }
     }
 
     addEventListeners(): void {

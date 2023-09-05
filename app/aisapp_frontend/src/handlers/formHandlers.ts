@@ -8,8 +8,9 @@ interface CustomFormInterface extends HTMLElement {
 
 }
 
-interface FormGroupInterface extends HTMLElement {
+export interface FormGroupInterface extends HTMLElement {
     getInputValue(): string;
+    setInputValue(newValue: string): void;
 
 }
 

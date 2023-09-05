@@ -89,5 +89,9 @@ fieldset {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
+}
+
+output-card {
+    margin-left: 1rem;
 }

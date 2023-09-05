@@ -100,6 +100,10 @@ class PasswordFormGroup extends HTMLElement {
     getInputValue(): string {
         return getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input').value;
     }
+
+    setInputValue(newVal: string): void {
+        getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input').value = newVal;
+    }
 }
 
 
@@ -115,7 +119,7 @@ class OutputCard extends HTMLElement {
         const targetInput = getElementOrThrow<HTMLInputElement>(targetElement.shadowRoot!, 'input');
         const defaultValue = targetInput.value
 
-        targetInput.addEventListener('input', () => {
+        targetElement.addEventListener('input', () => {
             const output = getElementOrThrow<HTMLOutputElement>(this.shadowRoot!, 'output')
             output.value = targetElement.getInputValue();
         })
@@ -229,6 +233,10 @@ class FormGroup extends HTMLElement {
 
     getInputValue(): string {
         return getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input').value
+    }
+
+    setInputValue(newVal: string): void {
+        getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input').value = newVal;
     }
 }
 
