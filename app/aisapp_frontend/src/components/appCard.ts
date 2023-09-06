@@ -31,9 +31,7 @@ class AppCard extends HTMLElement {
         const imgElem = getElementOrThrow<HTMLImageElement>(this.shadowRoot!, 'img');
         const article = getElementOrThrow<HTMLElement>(this.shadowRoot!, 'article');
 
-
         switch (name) {
-
             case 'img-src':
                 imgElem.setAttribute("src", newValue);
                 break;
@@ -45,7 +43,6 @@ class AppCard extends HTMLElement {
             case 'reversed':
                 article.className = "card reverse";
                 break;
-
         }
     }
 
