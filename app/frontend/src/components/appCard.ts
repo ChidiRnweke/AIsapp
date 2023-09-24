@@ -1,5 +1,5 @@
 import { getElementOrThrow } from "../utils/utils.js";
-class AppCard extends HTMLElement {
+export class AppCard extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
