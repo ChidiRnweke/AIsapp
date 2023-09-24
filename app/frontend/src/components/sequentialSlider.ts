@@ -1,23 +1,17 @@
-import { getElementOrThrow, getAttributeOrThrow } from "../utils/utils.js";
-import { getSlideHandler, SlideHandler } from "../handlers/slideHandlers.js"
-class SequentialSlider extends HTMLElement {
+import { getElementOrThrow } from "../utils/utils.js";
+export class SequentialSlider extends HTMLElement {
 
-    slotsArray!: HTMLElement[];
-    currentSlotIndex: number;
-    validatorType: string;
-    validator!: SlideHandler;
+    private slotsArray!: HTMLElement[];
+    private currentSlotIndex: number;
 
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         this.currentSlotIndex = 0;
-        this.validatorType = getAttributeOrThrow(this, 'data-validator');
-
+        this.render();
     }
 
     connectedCallback(): void {
-        this.validator = getSlideHandler(this);
-        this.render();
         this.initializeSlider();
         this.addEventListeners();
     }
@@ -42,26 +36,23 @@ class SequentialSlider extends HTMLElement {
 
     }
 
-    addEventListeners(): void {
+    private addEventListeners(): void {
         getElementOrThrow<HTMLButtonElement>(this.shadowRoot!, '#next').addEventListener('click', () => this.showNext());
         getElementOrThrow<HTMLButtonElement>(this.shadowRoot!, '#previous').addEventListener('click', () => this.showPrevious());
 
     }
 
-    showNext(): void {
-        if (this.validator && !this.validator.validate()) {
-            return;
-        }
+    private showNext(): void {
         this.currentSlotIndex += 1;
         this.updateState();
     }
 
-    showPrevious(): void {
+    private showPrevious(): void {
         this.currentSlotIndex -= 1;
         this.updateState();
     }
 
-    updateState(): void {
+    private updateState(): void {
 
         this.slotsArray.forEach(slot => slot.classList.remove('active'));
         this.slotsArray[this.currentSlotIndex].classList.add('active');
