@@ -4,7 +4,7 @@ import { getElementOrThrow, getAttributeOrThrow } from "../utils/utils.js";
 
 class PasswordFormGroup extends HTMLElement {
     static formAssociated = true;
-    internals: ElementInternals;
+    private internals: ElementInternals;
     constructor() {
         super()
         this.attachShadow({ mode: 'open' });
@@ -300,8 +300,8 @@ class SubmitFormGroup extends HTMLElement {
 
 class BaseForm extends HTMLElement {
     actionType!: string;
-    errorMessageElem!: HTMLElement;
-    formHandler!: FormHandler;
+    private errorMessageElem!: HTMLElement;
+    private formHandler!: FormHandler;
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -313,7 +313,6 @@ class BaseForm extends HTMLElement {
     connectedCallback(): void {
         this.formHandler = getFormHandler(this);
         this.attachEventListeners();
-
     }
 
     private render(): void {

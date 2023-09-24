@@ -28,7 +28,7 @@ class SequentialSlider extends HTMLElement {
         this.slotsArray[0].classList.add('active');
     }
 
-    render(): void {
+    private render(): void {
         this.shadowRoot!.innerHTML = /*html*/`
         <style>
             @import url('static/css/slider.css');

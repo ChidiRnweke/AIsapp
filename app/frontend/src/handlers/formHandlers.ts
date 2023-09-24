@@ -3,7 +3,6 @@ import { getElementOrThrow } from "../utils/utils.js";
 
 interface CustomFormInterface extends HTMLElement {
     actionType: string;
-    errorMessageElem: HTMLElement;
     displayError(error: string): void;
 
 }
@@ -22,11 +21,12 @@ export interface FormHandler {
 
 
 export class LoginHandler implements FormHandler {
-    form: CustomFormInterface;
+    private form: CustomFormInterface;
     errorMessage: string;
+
     constructor(form: CustomFormInterface) {
         this.form = form;
-        this.errorMessage = "The passwords did not match";
+        this.errorMessage = "";
     }
 
     ExtraValidation(): boolean {
@@ -38,11 +38,10 @@ export class LoginHandler implements FormHandler {
         const password = getElementOrThrow<FormGroupInterface>(document, '#password').getInputValue();
 
         try {
-
             const response = await loginUser({ 'username': username, 'password': password });
 
             if (response.ok) {
-                this.form.errorMessageElem.textContent = '';
+                this.form.displayError('');
                 const loginEvent = new CustomEvent("loginSuccessful", { bubbles: true, composed: true })
                 this.form.dispatchEvent(loginEvent);
             }
@@ -61,15 +60,14 @@ export class LoginHandler implements FormHandler {
             console.error("Error while registering:", error);
             this.form.displayError("There was a problem registering. Please try again later.");
         }
-
-
     };
 }
 
 
 export class RegistrationHandler implements FormHandler {
     errorMessage: string;
-    form: CustomFormInterface;
+    private form: CustomFormInterface;
+
     constructor(form: CustomFormInterface) {
         this.form = form;
         this.errorMessage = "The passwords did not match";
@@ -89,7 +87,6 @@ export class RegistrationHandler implements FormHandler {
         const password = getElementOrThrow<FormGroupInterface>(document, '#password').getInputValue();
 
         try {
-
             const response = await createUser({
                 "username": username,
                 "first_name": firstName,
@@ -99,7 +96,7 @@ export class RegistrationHandler implements FormHandler {
             });
 
             if (response.ok) {
-                this.form.errorMessageElem.textContent = '';
+                this.form.displayError('');
                 const registrationSuccess = new CustomEvent("registrationSuccessful", { bubbles: true, composed: true })
                 this.form.dispatchEvent(registrationSuccess);
             }
@@ -112,7 +109,6 @@ export class RegistrationHandler implements FormHandler {
                 });
                 this.form.displayError(allErrors.trim());
             }
-
         }
 
         catch (error) {

@@ -6,7 +6,7 @@ class AppCard extends HTMLElement {
         this.render();
     }
 
-    render(): void {
+    private render(): void {
         this.shadowRoot!.innerHTML = `
         <style>
             @import url('static/css/AppCard.css');
