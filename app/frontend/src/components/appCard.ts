@@ -1,4 +1,4 @@
-import { getElementOrThrow } from "../utils/utils.js";
+import { getElementOrThrow } from "../utils/utils";
 export class AppCard extends HTMLElement {
     constructor() {
         super();
