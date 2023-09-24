@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Aisapp</title>
 
-    <link rel="stylesheet" href="{% static 'aisapp/css/common.css' %}">
-    <link rel="stylesheet" href="{% static 'aisapp/css/404.css' %}">
-    <link rel="stylesheet" href="{% static 'aisapp/css/home.css' %}">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/404.css">
+    <link rel="stylesheet" href="/static/css/home.css">
 
-    <script type="module" src="{% static 'aisapp/dist/components/appCard.js' %}"></script>
-    <script type="module" src="{% static 'aisapp/dist/components/sequentialSlider.js' %}"></script>
+    <script type="module" src="/src/components/appCard.ts"></script>
+    <script type="module" src="/src/components/sequentialSlider.ts"></script>
 
-    <script type="module" src="{% static 'aisapp/dist/components/formComponents.js' %}"></script>
-
-    <script type="module" src="{% static 'aisapp/dist/main.js' %}"></script>
+    <script type="module" src="/src/components/formComponents.ts"></script>
+    <script type="module" src="/src/main.ts"></script>
 
 
 </head>
@@ -34,20 +32,20 @@
         </section>
     </header>
     <main id="main-home">
-        <app-card img-src="{% static 'aisapp/icons/idea.svg'%}" img-alt="A description of the image">
+        <app-card img-src="/static/icons/idea.svg" img-alt="A description of the image">
             <h2 slot="title">AI-Powered Scheduling</h2>
             <p slot="text">Aisapp efficiently organizes your tasks based on your priorities
                 and available time. </p>
         </app-card>
 
-        <app-card img-src="{% static 'aisapp/icons/note.svg'%}" img-alt="A description of the image" reversed>
+        <app-card img-src="/static/icons/note.svg" img-alt="A description of the image" reversed>
             <h2 slot="title">Smart Reminders</h2>
             <p slot="text">Never forget an important task again. Aisapp's reminders are
                 triggered
                 at the optimal time to encourage task completion. These reminders are tailored to your schedule,
                 ensuring you always have time to finish what you started.</p>
         </app-card>
-        <app-card img-src="{% static 'aisapp/icons/progress.svg'%}" img-alt="A description of the image">
+        <app-card img-src="/static/icons/progress.svg" img-alt="A description of the image">
             <h2 slot="title">Progress Tracking</h2>
             <p slot="text">Stay informed about your productivity. Aisapp's progress
                 tracking
@@ -55,12 +53,12 @@
                 be
                 more efficient.</p>
         </app-card>
-        <app-card img-src="{% static 'aisapp/icons/chart.svg'%}" img-alt="A description of the image" reversed>
+        <app-card img-src="/static/icons/chart.svg" img-alt="A description of the image" reversed>
             <h2 slot="title">Analytics</h2>
             <p slot="text">Understand your peak productivity times, identify bottlenecks in your schedule, and use
                 this data to shape a more efficient routine.</p>
         </app-card>
-        <app-card img-src="{% static 'aisapp/icons/calendar.svg'%}" img-alt="A description of the image">
+        <app-card img-src="/static/icons/calendar.svg" img-alt="A description of the image">
             <h2 slot="title">Google Calendar Integration</h2>
             <p slot="text">Manage all your schedules in one place. Aisapp
                 seamlessly
@@ -206,7 +204,6 @@
 
 
 <body>
-    {% csrf_token %}
     <footer>
         <p>&copy; 2023 Aisapp. All rights reserved.</p>
     </footer>

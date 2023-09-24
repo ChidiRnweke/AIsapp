@@ -31,7 +31,7 @@ class SequentialSlider extends HTMLElement {
     render(): void {
         this.shadowRoot!.innerHTML = /*html*/`
         <style>
-            @import url('static/aisapp/css/slider.css');
+            @import url('static/css/slider.css');
         </style>
         <slot></slot>
         <div class="navigation-buttons">

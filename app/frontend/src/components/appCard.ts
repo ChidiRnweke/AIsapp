@@ -9,7 +9,7 @@ class AppCard extends HTMLElement {
     render(): void {
         this.shadowRoot!.innerHTML = `
         <style>
-            @import url('static/aisapp/css/AppCard.css');
+            @import url('static/css/AppCard.css');
         </style>
 
             <article class="card">

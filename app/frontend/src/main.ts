@@ -12,12 +12,8 @@ const PageRoute: routes = {
 };
 
 const handleRouteChange = (newRoute: string, PageRoutes: routes): void => {
-
-    if (PageRoutes[newRoute]) {
-        render(PageRoutes[newRoute]);
-    } else {
-        render(PageRoutes['/not-found']);
-    }
+    const page = PageRoutes[newRoute] || PageRoutes['/not-found'];
+    render(page);
 };
 
 const render = (page: Page) => {

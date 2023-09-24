@@ -30,7 +30,7 @@ class PasswordFormGroup extends HTMLElement {
     private render() {
         this.shadowRoot!.innerHTML = /*html*/`
         <style>
-            @import url('static/aisapp/css/forms.css');
+            @import url('static/css/forms.css');
         </style>
         <div class="form-group">
             <label></label>
@@ -50,7 +50,6 @@ class PasswordFormGroup extends HTMLElement {
         const togglePassword = getElementOrThrow<HTMLSpanElement>(this.shadowRoot!, 'span');
 
         switch (name) {
-
             case 'name':
                 label.htmlFor = newValue;
                 input.name = newValue;
@@ -64,7 +63,6 @@ class PasswordFormGroup extends HTMLElement {
             case 'label':
                 label.textContent = newValue;
                 break;
-
         }
     }
 
@@ -72,7 +70,6 @@ class PasswordFormGroup extends HTMLElement {
         const inputId = (e.currentTarget as HTMLElement).getAttribute('data-input');
         const inputElem = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, `#${inputId}`);
         inputElem.type = 'text';
-
     }
 
     private hidePassword(e: Event): void {
@@ -169,7 +166,7 @@ class FormGroup extends HTMLElement {
     private render() {
         this.shadowRoot!.innerHTML = /*html*/`
         <style>
-            @import url('static/aisapp/css/forms.css');
+            @import url('static/css/forms.css');
         </style>
         <div class="form-group">
             <label></label>
@@ -211,7 +208,6 @@ class FormGroup extends HTMLElement {
             default:
                 input.setAttribute(name, newValue);
                 break;
-
         }
     }
 
@@ -273,7 +269,7 @@ class SubmitFormGroup extends HTMLElement {
     private render() {
         this.shadowRoot!.innerHTML = /*html*/`
         <style>
-            @import url('static/aisapp/css/forms.css');
+            @import url('static/css/forms.css');
         </style>
         <div class="form-group">
             <button type="submit"></button>
@@ -297,7 +293,6 @@ class SubmitFormGroup extends HTMLElement {
             case 'label':
                 button.textContent = newValue;
                 break;
-
         }
     }
 
@@ -324,7 +319,7 @@ class BaseForm extends HTMLElement {
     private render(): void {
         this.shadowRoot!.innerHTML = /*html*/`
             <style>
-                @import url('static/aisapp/css/forms.css');
+                @import url('static/css/forms.css');
             </style>
                 <slot name="form">
                     <slot></slot>

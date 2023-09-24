@@ -18,7 +18,6 @@ const getCookie = (name: string): string => {
 
 const headers = {
     "Content-Type": "application/json",
-    "X-CSRFToken": getCookie('csrftoken'),
 };
 
 type registerCredentials = {
