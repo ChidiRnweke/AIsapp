@@ -44,7 +44,7 @@ class PasswordFormGroup extends HTMLElement {
         return ["label", "name", "id"];
     }
 
-    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
         const input = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input');
         const label = getElementOrThrow<HTMLLabelElement>(this.shadowRoot!, 'label');
         const togglePassword = getElementOrThrow<HTMLSpanElement>(this.shadowRoot!, 'span');
@@ -178,7 +178,7 @@ class FormGroup extends HTMLElement {
         return ["name", "label", "type", "id", "min", "max", "value", "required"];
     }
 
-    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
         const input = getElementOrThrow<HTMLInputElement>(this.shadowRoot!, 'input');
         const label = getElementOrThrow<HTMLLabelElement>(this.shadowRoot!, 'label');
 
@@ -281,7 +281,7 @@ class SubmitFormGroup extends HTMLElement {
         return ["label", "id"];
     }
 
-    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
         const button = getElementOrThrow<HTMLButtonElement>(this.shadowRoot!, 'button');
 
         switch (name) {
@@ -333,7 +333,7 @@ class BaseForm extends HTMLElement {
         return ["action-type"];
     }
 
-    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
         const form = getElementOrThrow<HTMLFormElement>(this.shadowRoot!, 'slot[name=form]');
 
         switch (name) {

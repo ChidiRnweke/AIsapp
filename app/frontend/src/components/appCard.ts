@@ -27,7 +27,7 @@ class AppCard extends HTMLElement {
         return ["img-src", "img-alt", "reversed"];
     }
 
-    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
         const imgElem = getElementOrThrow<HTMLImageElement>(this.shadowRoot!, 'img');
         const article = getElementOrThrow<HTMLElement>(this.shadowRoot!, 'article');
 
