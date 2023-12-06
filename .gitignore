@@ -161,3 +161,7 @@ cython_debug/
 .vscode/settings.json
 node_modules
 docs/
+target/
+.bloop/
+project/
+.metals/
