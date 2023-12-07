@@ -9,34 +9,34 @@ case class Resource(
     description: Option[String]
 )
 
-case class TaskDetails(
+case class TaskDetail(
     name: String,
-    timeEstimateMin: NonNegInt,
-    preferredFinishDate: FutureDate,
-    timeSpent: NonNegInt,
     owner: User,
+    timeSpent: NonNegInt = NonNegInt.zero,
+    timeEstimateMin: Option[NonNegInt] = None,
     isFinished: Boolean = false,
-    description: Option[String]
+    preferredFinishDate: Option[FutureDate] = None,
+    description: Option[String] = None
 )
 
 enum Task(
-    details: TaskDetails,
+    detail: TaskDetail,
     createdAt: FutureDate,
     modifiedAt: FutureDate = FutureDate.now
 ):
 
   case Todo(
-      details: TaskDetails,
+      detail: TaskDetail,
       milestone: Milestone,
       minimumLength: NonNegInt,
       createdAt: FutureDate = FutureDate.now
-  ) extends Task(details, createdAt)
+  ) extends Task(detail, createdAt)
 
   case Milestone(
-      details: TaskDetails,
+      detail: TaskDetail,
       aspect: Aspect,
       createdAt: FutureDate = FutureDate.now
-  ) extends Task(details, createdAt)
+  ) extends Task(detail, createdAt)
 
-  case Aspect(details: TaskDetails, createdAt: FutureDate = FutureDate.now)
-      extends Task(details, createdAt)
+  case Aspect(detail: TaskDetail, createdAt: FutureDate = FutureDate.now)
+      extends Task(detail, createdAt)
