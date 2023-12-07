@@ -8,14 +8,35 @@ case class Resource(
     types: List[ResourceType],
     description: Option[String]
 )
-case class Todo(
+
+case class TaskDetails(
     name: String,
-    timeEstimateMin: PosInt,
+    timeEstimateMin: NonNegInt,
     preferredFinishDate: FutureDate,
-    timeSpent: PosInt,
+    timeSpent: NonNegInt,
     owner: User,
-    description: Option[String],
-    createdAt: FutureDate = FutureDate.now,
-    isFinished: Boolean = false
+    isFinished: Boolean = false,
+    description: Option[String]
+)
+
+enum Task(
+    details: TaskDetails,
+    createdAt: FutureDate,
+    modifiedAt: FutureDate = FutureDate.now
 ):
-  val modifiedAt = FutureDate.now
+
+  case Todo(
+      details: TaskDetails,
+      milestone: Milestone,
+      minimumLength: NonNegInt,
+      createdAt: FutureDate = FutureDate.now
+  ) extends Task(details, createdAt)
+
+  case Milestone(
+      details: TaskDetails,
+      aspect: Aspect,
+      createdAt: FutureDate = FutureDate.now
+  ) extends Task(details, createdAt)
+
+  case Aspect(details: TaskDetails, createdAt: FutureDate = FutureDate.now)
+      extends Task(details, createdAt)

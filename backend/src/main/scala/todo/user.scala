@@ -12,7 +12,7 @@ case class User(
     status: Status = Status.SetupRequired,
     role: Role = Role.User,
     createdAt: FutureDate = FutureDate.now,
-    failedLoginAttempts: PosInt = PosInt.zero
+    failedLoginAttempts: NonNegInt = NonNegInt.zero
 ):
   val modifiedAt = Date()
 
@@ -34,7 +34,7 @@ opaque type UserName = String
 opaque type Password = String
 opaque type FutureDate = Date
 opaque type Email = String
-opaque type PosInt = BigInt
+opaque type NonNegInt = BigInt
 type ValidationResult[A] = ValidatedNec[String, A]
 
 object FutureDate:
@@ -96,13 +96,14 @@ object UserName:
   def apply(rawInput: String): ValidationResult[UserName] =
     rawInput.validNec
 
-object PosInt:
-  def apply(rawNum: BigInt): ValidationResult[PosInt] =
+object NonNegInt:
+  def apply(rawNum: BigInt): ValidationResult[NonNegInt] =
     if (rawNum >= 0) rawNum.validNec
     else
       "A negative integer was given where a non-negative integer is required.".invalidNec
 
-  inline def zero: PosInt = 0
-  inline def one: PosInt = 1
-  inline infix def `+`(x: PosInt, y: PosInt): PosInt = x + y
-  inline infix def `*`(x: PosInt, y: PosInt): PosInt = x * y
+  inline def zero: NonNegInt = 0
+  inline def one: NonNegInt = 1
+  extension (x: NonNegInt)
+    inline infix def `+`(y: NonNegInt): NonNegInt = x + y
+    inline infix def `*`(y: NonNegInt): NonNegInt = x * y
