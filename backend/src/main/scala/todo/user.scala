@@ -1,9 +1,9 @@
 package todo
 
-import java.util.Date
 import cats.data.Validated
 import cats.data.ValidatedNec
 import cats.implicits._
+import java.time.LocalDate
 
 case class User(
     userName: UserName,
@@ -14,7 +14,7 @@ case class User(
     createdAt: FutureDate = FutureDate.now,
     failedLoginAttempts: NonNegInt = NonNegInt.zero
 ):
-  val modifiedAt = Date()
+  val modifiedAt = LocalDate.now()
 
 object User:
   def fromRawInput(
@@ -32,18 +32,17 @@ enum Role:
 
 opaque type UserName = String
 opaque type Password = String
-opaque type FutureDate = Date
+opaque type FutureDate = LocalDate
 opaque type Email = String
 opaque type NonNegInt = BigInt
 type ValidationResult[A] = ValidatedNec[String, A]
 
 object FutureDate:
-  def apply(rawDate: Date): ValidationResult[FutureDate] =
-    if (now.before(rawDate)) rawDate.validNec
+  def apply(rawDate: LocalDate): ValidationResult[FutureDate] =
+    if (now.isBefore(rawDate)) rawDate.validNec
     else
       s"You supplied ${rawDate} which needs to be larger or equal than today".invalidNec
-  def now: FutureDate =
-    Date()
+  def now: FutureDate = LocalDate.now()
 
 object Email:
   def apply(rawInput: String): ValidationResult[Email] =
