@@ -100,7 +100,7 @@ object PosInt:
   def apply(rawNum: BigInt): ValidationResult[PosInt] =
     if (rawNum >= 0) rawNum.validNec
     else
-      "An negative integer was given where a non-negative is required.".invalidNec
+      "A negative integer was given where a non-negative integer is required.".invalidNec
 
   inline def zero: PosInt = 0
   inline def one: PosInt = 1
