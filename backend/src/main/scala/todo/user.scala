@@ -13,7 +13,7 @@ case class User(
     email: Email,
     status: Status = Status.SetupRequired,
     role: Role = Role.User,
-    createdAt: FutureDate = FutureDate.now,
+    createdAt: FutureDate = FutureDate.now(),
     failedLoginAttempts: NonNegInt = NonNegInt.zero
 ):
   val modifiedAt = LocalDate.now()
@@ -42,10 +42,10 @@ type ValidationResult[A] = ValidatedNec[String, A]
 
 object FutureDate:
   def apply(rawDate: LocalDate): ValidationResult[FutureDate] =
-    if (now.isBefore(rawDate)) rawDate.validNec
+    if (now().isBefore(rawDate)) rawDate.validNec
     else
       s"You supplied ${rawDate} which needs to be larger or equal than today".invalidNec
-  def now: FutureDate = LocalDate.now()
+  def now(): FutureDate = LocalDate.now()
 
 object Email:
   def apply(rawInput: String): ValidationResult[Email] =
