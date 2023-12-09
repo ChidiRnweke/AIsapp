@@ -4,6 +4,8 @@ import cats.data.Validated
 import cats.data.ValidatedNec
 import cats.implicits._
 import java.time.LocalDate
+import java.time.LocalDateTime
+import math.Ordered.orderingToOrdered
 
 case class User(
     userName: UserName,
@@ -33,6 +35,7 @@ enum Role:
 opaque type UserName = String
 opaque type Password = String
 opaque type FutureDate = LocalDate
+opaque type FutureDateTime = LocalDateTime
 opaque type Email = String
 opaque type NonNegInt = BigInt
 type ValidationResult[A] = ValidatedNec[String, A]
@@ -106,3 +109,10 @@ object NonNegInt:
   extension (x: NonNegInt)
     inline infix def `+`(y: NonNegInt): NonNegInt = x + y
     inline infix def `*`(y: NonNegInt): NonNegInt = x * y
+
+object FutureDateTime:
+  def apply(dateTime: LocalDateTime): ValidationResult[FutureDateTime] =
+    if (dateTime > LocalDateTime.now()) dateTime.validNec
+    else "A date time was attempted to set that is in the past".invalidNec
+  extension (currentDateTime: FutureDateTime)
+    def isFuture(): Boolean = currentDateTime > LocalDateTime.now()
