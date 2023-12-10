@@ -31,11 +31,11 @@ enum Task(
     createdAt: FutureDate,
     modifiedAt: FutureDate = FutureDate.now()
 ):
-
   case Todo(
       detail: TaskDetail,
       milestone: Milestone,
       minimumLength: NonNegInt,
+      resources: Option[NonEmptyList[Resource]],
       createdAt: FutureDate = FutureDate.now()
   ) extends Task(detail, createdAt)
 
