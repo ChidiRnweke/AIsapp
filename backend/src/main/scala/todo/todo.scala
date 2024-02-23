@@ -127,19 +127,51 @@ object TaskCreation:
 
 object TaskModification:
   import Task._
+
   private inline def timeSpent =
-    Lens[TaskDetail, NonNegInt](_.timeSpent)(n => t => t.copy(timeSpent = n))
-  private inline def isFinished =
-    Lens[TaskDetail, Boolean](_.isFinished)(b => t => t.copy(isFinished = b))
-  private inline def name =
-    Lens[TaskDetail, String](_.name)(n => t => t.copy(name = n))
-  private inline def timeEstimateMin =
-    Lens[TaskDetail, Option[NonNegInt]](_.timeEstimateMin)(n =>
-      t => t.copy(timeEstimateMin = n)
+    Lens[TaskDetail, NonNegInt](_.timeSpent)(newTime =>
+      detail => detail.copy(timeSpent = newTime)
     )
-  private inline def todoTaskDetail =
-    Lens[Todo, TaskDetail](_.detail)(td => t => t.copy(td))
+
+  private inline def isFinished =
+    Lens[TaskDetail, Boolean](_.isFinished)(newFinished =>
+      detail => detail.copy(isFinished = newFinished)
+    )
+  private inline def name =
+    Lens[TaskDetail, String](_.name)(newName =>
+      detail => detail.copy(name = newName)
+    )
+  private inline def timeEstimateMin =
+    Lens[TaskDetail, Option[NonNegInt]](_.timeEstimateMin)(newEstimate =>
+      detail => detail.copy(timeEstimateMin = newEstimate)
+    )
+  private inline def todoDetail =
+    Lens[Todo, TaskDetail](_.detail)(detail => todo => todo.copy(detail))
 
   extension (todo: Todo)
+    private inline def changeTaskDetailAttribute[A](
+        attrLens: Lens[TaskDetail, A],
+        newValue: A
+    ) = todoDetail.andThen(attrLens).replace(newValue)(todo)
+
     inline def changeTaskName(newName: String): Todo =
-      todoTaskDetail.andThen(name).replace(newName)(todo)
+      changeTaskDetailAttribute(name, newName)
+
+    inline def changeIsFinished(finished: Boolean): Todo =
+      changeTaskDetailAttribute(isFinished, finished)
+
+    inline def changeTimeSpent(newTime: NonNegInt): Todo =
+      changeTaskDetailAttribute(timeSpent, newTime)
+
+    inline def changeEstimate(newEstimate: NonNegInt): Todo =
+      changeTaskDetailAttribute(timeEstimateMin, Some(newEstimate))
+
+// case class TaskDetail(
+//     name: String,
+//     owner: User,
+//     timeSpent: NonNegInt = NonNegInt.zero,
+//     timeEstimateMin: Option[NonNegInt] = None,
+//     isFinished: Boolean = false,
+//     preferredFinishDate: Option[FutureDate] = None,
+//     description: Option[String] = None
+// )
