@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components {
+    .header-bg {
+        @apply bg-no-repeat bg-cover;
+        background-image: url('./assets/shared/header-bg.svg');
+    }
+
+    .main-bg {
+        @apply bg-no-repeat bg-cover;
+        background-image: url('./assets/shared/main-background.svg');
+    }
+}
