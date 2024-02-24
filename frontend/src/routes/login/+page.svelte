@@ -7,6 +7,7 @@
 	import PasswordInput from '../../components/Register/PasswordInput.svelte';
 	import EmailInput from '../../components/Register/EmailInput.svelte';
 	import FormComponent from '../../components/Register/FormComponent.svelte';
+	let newPassword = false;
 </script>
 
 <header class="header-bg mb-20 grid grid-cols-1 place-items-center text-center">
@@ -26,7 +27,7 @@
 			<EmailInput />
 		</div>
 		<div class="mb-10 self-stretch">
-			<PasswordInput />
+			<PasswordInput {newPassword} />
 		</div>
 		<div class="mb-10 self-stretch text-center">
 			<a href="/forgot-password" class="text-accent dark:text-dark-accent font-bold">
