@@ -16,7 +16,7 @@ export default {
         secondary: '#0f62fe',
         accent: '#4db8ac',
         background: '#FFFFFF',
-        'background-alt': '#EDF3FD',
+        'background-alt': '#f0f0f0',
         foreground: '#333333',
         subtle: '#606060',
         error: '#dc3545',
