@@ -4,12 +4,12 @@
 	import DeviceMockup from 'flowbite-svelte/DeviceMockup.svelte';
 	import AppBenefits from '../components/Home/AppBenefits.svelte';
 	import Avatar from 'flowbite-svelte/Avatar.svelte';
-	import Nav from '../components/Shared/Nav.svelte';
-	import Footer from '../components/Shared/Footer.svelte';
 	import CTA from '../components/Shared/CTA.svelte';
+	import Main from '../components/Shared/Main.svelte';
+	import H2 from '../components/Shared/H2.svelte';
 </script>
 
-<header class="grid grid-cols-1 place-items-center text-center mb-20 header-bg">
+<header class="header-bg mb-20 grid grid-cols-1 place-items-center text-center">
 	<Heading tag="h1" class="text-primary dark:text-dark-primary pb-12 text-6xl">
 		Find time for what matters.
 	</Heading>
@@ -21,15 +21,13 @@
 	<CTA />
 </header>
 
-<main
-	class="lg:mr-56 lg:ml-56 mr-5 ml-5 text-foreground dark:text-dark-foreground border-b-2 mb-2 main-bg"
->
-	<section class="grid grid-cols-1 place-items-center mb-20">
+<Main>
+	<section class="mb-20 grid grid-cols-1 place-items-center">
 		<Heading tag="h2" class="text-primary dark:text-dark-primary pb-12 text-center">
 			Do more than chase deadlines.
 		</Heading>
 		<P
-			class="text-foreground dark:text-dark-foreground  text-wrap text-center max-w-xl mb-10 leading-loose "
+			class="text-foreground dark:text-dark-foreground  mb-10 max-w-xl text-wrap text-center leading-loose "
 		>
 			<span class="text-accent dark:text-dark-accent font-extrabold">"</span>
 			Life is too to short move from one deadline to the next. On the other hand, it's hard to find time
@@ -47,17 +45,12 @@
 	</section>
 
 	<section class="mb-20">
-		<Heading tag="h2" class="text-primary dark:text-dark-primary text-center font-extrabold mb-20">
-			Features Designed to Empower You
-		</Heading>
-
+		<H2 title="Features Designed to Empower You" />
 		<AppBenefits />
 	</section>
 
-	<section class="grid place-items-center mb-20">
-		<Heading tag="h2" class="text-primary dark:text-dark-primary text-center">
-			Convinced? Get started right here.
-		</Heading>
+	<section class="grid place-items-center">
+		<H2 title="Convinced? Get started right here." />
 		<CTA />
 	</section>
-</main>
+</Main>
