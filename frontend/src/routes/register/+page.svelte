@@ -6,6 +6,7 @@
 	import Heading from 'flowbite-svelte/Heading.svelte';
 	import PasswordInput from '../../components/Register/PasswordInput.svelte';
 	import EmailInput from '../../components/Register/EmailInput.svelte';
+	import FormComponent from '../../components/Register/FormComponent.svelte';
 </script>
 
 <header class="header-bg mb-20 grid grid-cols-1 place-items-center text-center">
@@ -13,32 +14,28 @@
 </header>
 
 <Main>
-	<div class="grid grid-cols-1 place-items-center">
-		<section
-			class="dark:bg-dark-background-alt bg-background-alt flex grid-cols-1 flex-col place-items-center rounded-md bg-opacity-30 p-8 shadow-sm dark:bg-opacity-30"
-		>
-			<Heading tag="h2" class="text-primary dark:text-dark-primary pb-6 text-center">
-				Create your account here
-			</Heading>
-			<P align="center" class="text-accent dark:text-dark-accent pb-8 font-bold">
-				Get started with a free account.
-			</P>
+	<FormComponent>
+		<Heading tag="h2" class="text-primary dark:text-dark-primary pb-6 text-center">
+			Create your account here
+		</Heading>
+		<P align="center" class="text-accent dark:text-dark-accent pb-8 font-bold">
+			Get started with a free account.
+		</P>
 
-			<div class="mb-10 self-stretch">
-				<EmailInput />
-			</div>
-			<div class="mb-10 self-stretch">
-				<PasswordInput />
-			</div>
-			<div class="mb-10 self-stretch">
-				<PasswordInput labelText="Confirm password" />
-			</div>
-			<Button
-				type="submit"
-				class=" bg-primary dark:bg-dark-primary hover:bg-accent dark:hover:bg-dark-accent self-stretch text-lg"
-			>
-				Register
-			</Button>
-		</section>
-	</div>
+		<div class="mb-10 self-stretch">
+			<EmailInput />
+		</div>
+		<div class="mb-10 self-stretch">
+			<PasswordInput />
+		</div>
+		<div class="mb-10 self-stretch">
+			<PasswordInput labelText="Confirm password" />
+		</div>
+		<Button
+			type="submit"
+			class=" bg-primary dark:bg-dark-primary hover:bg-accent dark:hover:bg-dark-accent self-stretch text-lg"
+		>
+			Register
+		</Button>
+	</FormComponent>
 </Main>
