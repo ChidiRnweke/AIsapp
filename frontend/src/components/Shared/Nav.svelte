@@ -16,7 +16,6 @@
 <Navbar class={classProp}>
 	<NavBrand href="/">
 		<span class="text-primary dark:text-dark-primary font-extrabold">AIsapp</span>
-		<DarkMode size="lg" />
 	</NavBrand>
 	<NavHamburger />
 	<NavUl {activeUrl} {activeClass}>
@@ -24,4 +23,5 @@
 		<NavLi href="/register">Register</NavLi>
 		<NavLi href="/login">Login</NavLi>
 	</NavUl>
+	<DarkMode size="lg" />
 </Navbar>
