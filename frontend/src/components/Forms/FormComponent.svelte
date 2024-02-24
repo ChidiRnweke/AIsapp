@@ -15,7 +15,7 @@
 		}
 	})();
 
-	$: sectionClass = `dark:bg-dark-background-alt bg-background-alt ${size} grid-cols-1 flex-col place-items-center rounded-md bg-opacity-30 p-${padding} shadow-sm dark:bg-opacity-50`;
+	$: sectionClass = ` ${size} grid-cols-1 flex-col place-items-center rounded-md p-${padding} shadow-md border-t-secondary dark:border-t-dark-secondary border-t-4`;
 </script>
 
 <form class="grid grid-cols-1 place-items-center">

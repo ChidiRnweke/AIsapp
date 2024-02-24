@@ -4,9 +4,9 @@
 	import Main from '../../components/Shared/Main.svelte';
 	import Button from 'flowbite-svelte/Button.svelte';
 	import Heading from 'flowbite-svelte/Heading.svelte';
-	import PasswordInput from '../../components/Register/PasswordInput.svelte';
-	import EmailInput from '../../components/Register/EmailInput.svelte';
-	import FormComponent from '../../components/Register/FormComponent.svelte';
+	import PasswordInput from '../../components/Forms/PasswordInput.svelte';
+	import EmailInput from '../../components/Forms/EmailInput.svelte';
+	import FormComponent from '../../components/Forms/FormComponent.svelte';
 </script>
 
 <header class="header-bg mb-20 grid grid-cols-1 place-items-center text-center">
