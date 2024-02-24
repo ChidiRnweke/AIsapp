@@ -7,6 +7,6 @@
 <Label for="email" class="text-secondary dark:text-dark-secondary mb-2 text-xl font-extrabold">
 	Email address
 </Label>
-<Input type="email" id="email" placeholder="john.doe@company.com" required>
+<Input type="email" id="email" placeholder="john.doe@company.com" required autocomplete="email">
 	<EmailOutline slot="left" />
 </Input>

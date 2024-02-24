@@ -6,13 +6,20 @@
 	import FormTextBoxPassword from '~icons/mdi/form-textbox-password.svelte';
 	let show = false;
 	export let labelText = 'password';
+	export let newPassword = true;
 </script>
 
 <Label for={labelText} class="text-secondary dark:text-dark-secondary mb-2 text-xl font-extrabold">
 	{labelText}
 </Label>
-<Input type={show ? 'text' : 'password'} id={labelText} placeholder="•••••••••" required>
-	<button slot="right" on:click={() => (show = !show)} class="pointer-events-auto">
+<Input
+	type={show ? 'text' : 'password'}
+	id={labelText}
+	placeholder="•••••••••"
+	required
+	autocomplete={newPassword ? 'new-password' : 'current-password'}
+>
+	<button slot="right" on:click|preventDefault={() => (show = !show)} class="pointer-events-auto">
 		{#if show}
 			<EyeOutline class="h-6 w-6" />
 		{:else}
