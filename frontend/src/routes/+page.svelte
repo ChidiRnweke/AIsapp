@@ -17,7 +17,9 @@
 		AIsapp intelligently organizes your life by prioritizing your tasks and fitting them into your
 		available time. <br /> Experience the perfect balance between productivity and personal time.
 	</P>
-	<DeviceMockup />
+	<div class="mb-14">
+		<DeviceMockup />
+	</div>
 	<CTA />
 </header>
 
