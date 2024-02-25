@@ -7,7 +7,20 @@
 	export let open: boolean;
 	export let close: () => void;
 	let selected: Array<string> = [];
-
+	const defaultItems = [
+		{
+			value: 'Finishing a marathon',
+			name: 'Finishing a marathon'
+		},
+		{
+			value: 'Teaching John how to ride the bike.',
+			name: 'Teaching John how to ride the bike.'
+		},
+		{
+			value: 'Saving up for a trip to Spain',
+			name: 'Saving up for a trip to Spain'
+		}
+	];
 	$: milestone = { name: aspect, milestones: selected };
 	function updateStore() {
 		milestoneStore.update((currentMilestones) => {
@@ -32,9 +45,16 @@
 			textPlaceholder="Career"
 			bind:selected
 			labelText="Let's add some milestones."
+			items={defaultItems}
+			class="pb-20"
 		/>
 	</div>
 	<svelte:fragment slot="footer">
-		<Button on:click={() => updateStore()}>Done.</Button>
+		<Button
+			class="bg-accent dark:bg-accent hover:bg-primary dark:hover:bg-primary w-full place-self-center text-white lg:place-self-start"
+			on:click={() => updateStore()}
+		>
+			Done.
+		</Button>
 	</svelte:fragment>
 </Modal>
