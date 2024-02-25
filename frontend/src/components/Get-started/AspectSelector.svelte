@@ -30,10 +30,7 @@
 			name: 'health'
 		}
 	];
-
-	let selected: Array<string>;
 	export let error = false;
-	$: aspectsStore.set(selected);
 </script>
 
 <H2 title="Aspects - step 1/3" alignment="center" marginBottom="10" />
@@ -45,7 +42,7 @@
 	<TextMultiSelect
 		textPlaceholder="Career"
 		items={defaultItems}
-		bind:selected
+		bind:selected={$aspectsStore}
 		labelText="Let's get you started with some aspects."
 	/>
 	{#if error}
