@@ -6,28 +6,28 @@
 	import { aspectsStore } from '$lib/Get-started/stores';
 	const defaultItems = [
 		{
-			value: 'career',
-			name: 'career'
+			value: 'Career',
+			name: 'Career'
 		},
 		{
-			value: 'family',
-			name: 'family'
+			value: 'Family',
+			name: 'Family'
 		},
 		{
-			value: 'sports',
-			name: 'sports'
+			value: 'Sports',
+			name: 'Sports'
 		},
 		{
-			value: 'reading',
-			name: 'reading'
+			value: 'Reading',
+			name: 'Reading'
 		},
 		{
-			value: 'education',
-			name: 'education'
+			value: 'Education',
+			name: 'Education'
 		},
 		{
-			value: 'health',
-			name: 'health'
+			value: 'Health',
+			name: 'Health'
 		}
 	];
 	export let error = false;
