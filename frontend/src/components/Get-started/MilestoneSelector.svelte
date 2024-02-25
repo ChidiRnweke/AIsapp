@@ -23,8 +23,8 @@
 
 <H2 title="Milestones - step 2/3" alignment="center" marginBottom="20" />
 <Paragraph textType="regular" class="mb-8 font-extrabold">
-	Now that you've selected your aspects the next step is selecting your milestones. These are medium
-	to longer term tangible achievements you want to make.
+	The next step is selecting your milestones. These are medium to longer term tangible achievements
+	you want to make.
 </Paragraph>
 <div class="mb-10 flex w-full flex-col place-items-baseline gap-6 text-center">
 	{#each selected as aspect}
