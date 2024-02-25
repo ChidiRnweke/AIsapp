@@ -17,7 +17,6 @@
 	const toggleModal = (aspect: string, state: boolean) => {
 		modalState.set(aspect, state);
 		modalState = new Map(modalState);
-		console.log(modalState);
 	};
 	onDestroy(unsubscribe);
 </script>
