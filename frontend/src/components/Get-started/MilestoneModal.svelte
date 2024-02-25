@@ -3,10 +3,20 @@
 	import Modal from 'flowbite-svelte/Modal.svelte';
 	import TextMultiSelect from './TextMultiSelect.svelte';
 	import { milestoneStore } from '$lib/Get-started/stores';
+	import { onDestroy } from 'svelte';
 	export let aspect: string;
 	export let open: boolean;
 	export let close: () => void;
-	let selected: Array<string> = [];
+	let selected: Array<string>;
+
+	let unsubscribe = milestoneStore.subscribe((currentMilestone) => {
+		const index = currentMilestone.findIndex((m) => m.name === aspect);
+		if (index !== -1) {
+			selected = currentMilestone[index].milestones;
+		} else {
+			selected = [];
+		}
+	});
 	const defaultItems = [
 		{
 			value: 'Finishing a marathon',
@@ -21,12 +31,11 @@
 			name: 'Saving up for a trip to Spain'
 		}
 	];
-	$: milestone = { name: aspect, milestones: selected };
 	function updateStore() {
 		milestoneStore.update((currentMilestones) => {
 			const updatedMilestones = [...currentMilestones];
 			const index = updatedMilestones.findIndex((m) => m.name === aspect);
-
+			const milestone = { name: aspect, milestones: selected };
 			if (index !== -1) {
 				updatedMilestones[index] = { ...milestone };
 			} else {
@@ -37,6 +46,8 @@
 		});
 		open = false;
 	}
+
+	onDestroy(unsubscribe);
 </script>
 
 <Modal title={aspect} bind:open autoclose on:close={close}>
