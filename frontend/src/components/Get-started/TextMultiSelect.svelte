@@ -16,14 +16,14 @@
 	export let items: Array<MultiSelectItem> = [];
 	export let selected: Array<string> = [];
 
-	const keyPressHandler: (event: KeyboardEvent) => void = (event) => {
+	const handleKeyPress: (event: KeyboardEvent) => void = (event) => {
 		if (event.key == 'Enter') {
 			event.preventDefault();
-			addToSelected();
+			addItem();
 		}
 	};
 
-	const addToSelected = () => {
+	const addItem = () => {
 		if (inputValue.trim() && !items.find((item) => item.value === inputValue.trim())) {
 			const newItem = { value: inputValue.trim(), name: inputValue.trim() };
 			items = [...items, newItem];
@@ -49,9 +49,9 @@
 		class="mb-4"
 		placeholder={textPlaceholder}
 		bind:value={inputValue}
-		on:keydown={keyPressHandler}
+		on:keydown={handleKeyPress}
 	>
-		<button slot="right" on:click|preventDefault={addToSelected}><Check /></button>
+		<button slot="right" on:click|preventDefault={addItem}><Check /></button>
 	</Input>
 
 	<MultiSelect id={multiSelectId} {items} bind:value={selected}></MultiSelect>
